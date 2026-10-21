@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectList from '../components/ProjectList.astro';
+import { site } from '../config/site';
+import { getProjects } from '../lib/projects';
+
+const projects = await getProjects();
+---
+
+<BaseLayout title="Projects" description="Open-source tools I built to solve my own problems.">
+  <h1 class="page-title">Projects</h1>
+  {
+    projects.length > 0 ? (
+      <ProjectList projects={projects} detailed />
+    ) : (
+      <p class="empty">
+        {import.meta.env.DEV
+          ? `No projects selected. Add the "${site.projects.topic}" topic to a repo on GitHub, or list it in src/config/site.ts.`
+          : 'Nothing here yet.'}
+      </p>
+    )
+  }
+</BaseLayout>

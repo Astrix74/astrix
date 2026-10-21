@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getPosts } from '../../lib/posts';
+import { collectTags } from '../../lib/tags';
+
+const posts = await getPosts();
+const years = [...new Set(posts.map((post) => post.data.date.getUTCFullYear()))];
+const hasTags = collectTags(posts).length > 0;
+---
+
+<BaseLayout title="Writing" description="Everything I have written, newest first.">
+  <h1 class="page-title">Writing</h1>
+  {hasTags && <p class="page-meta"><a href="/writing/tags/">Browse by tag</a></p>}
+  {
+    years.length > 0 ? (
+      years.map((year) => (
+        <section class="section">
+          <h2 class="label">{year}</h2>
+          <PostList posts={posts.filter((post) => post.data.date.getUTCFullYear() === year)} />
+        </section>
+      ))
+    ) : (
+      <p class="empty">Nothing published yet.</p>
+    )
+  }
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getPosts } from '../../../lib/posts';
+import { collectTags } from '../../../lib/tags';
+
+const tags = collectTags(await getPosts());
+---
+
+<BaseLayout title="Tags" description="Posts grouped by tag.">
+  <a class="back" href="/writing/">← writing</a>
+  <h1 class="page-title">Tags</h1>
+  {
+    tags.length > 0 ? (
+      <ul class="tag-list">
+        {tags.map(({ tag, slug, count }) => (
+          <li>
+            <a href={`/writing/tags/${slug}/`}>
+              {tag}
+              <span class="count">{count}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="empty">No tags yet.</p>
+    )
+  }
+</BaseLayout>

@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import { site, socials } from '../config/site';
+
+const pages = await getCollection('pages', ({ data }) => data.footer);
+const links = [
+  ...pages
+    .sort((a, b) => a.data.title.localeCompare(b.data.title))
+    .map((page) => ({ label: page.data.title, href: `/${page.id}/` })),
+  ...socials,
+];
+---
+
+<footer class="site-footer">
+  <span>© {new Date().getFullYear()} {site.author}</span>
+  <nav aria-label="More">
+    {links.map((link) => <a href={link.href}>{link.label}</a>)}
+  </nav>
+</footer>

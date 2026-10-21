@@ -1,0 +1,29 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/posts';
+import { getNotes } from '../../lib/notes';
+
+export async function getStaticPaths() {
+  const notes = await getNotes();
+  return notes.map((note) => ({ params: { id: note.id }, props: { note } }));
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+---
+
+<BaseLayout title={note.data.title} description={`A short note from ${formatDate(note.data.date)}.`} type="article">
+  <link slot="head" rel="alternate" type="application/rss+xml" title="Astrix notes" href="/notes/rss.xml" />
+  <article>
+    <a class="back" href="/notes/">← notes</a>
+    <h1 class="post-title">{note.data.title}</h1>
+    <p class="post-meta">
+      <time datetime={note.data.date.toISOString()}>{formatDate(note.data.date)}</time>
+      {note.data.draft && ' · draft'}
+    </p>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

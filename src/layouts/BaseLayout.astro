@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+import { site } from '../config/site';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  type?: 'website' | 'article';
+  /** Overrides the canonical address, for posts first published somewhere else. */
+  canonical?: string;
+  /** Share-preview image, as an address on this site. Defaults to the generated site card. */
+  image?: string;
+  /** Structured data for search engines, rendered as JSON-LD. */
+  jsonLd?: Record<string, unknown>;
+}
+
+const {
+  title,
+  description = site.description,
+  type = 'website',
+  canonical: canonicalOverride,
+  image = '/og/default.png',
+  jsonLd,
+} = Astro.props;
+const pageTitle = title ? `${title} · ${site.title}` : site.title;
+const canonical = canonicalOverride ?? new URL(Astro.url.pathname, Astro.site).href;
+const imageUrl = new URL(image, Astro.site).href;
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="alternate" type="application/rss+xml" title={site.title} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={pageTitle} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={imageUrl} />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />}
+    <slot name="head" />
+    {
+      import.meta.env.PROD && site.analytics.cloudflareToken && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: site.analytics.cloudflareToken })}
+        />
+      )
+    }
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="wrap">
+      <Header />
+      <main id="main">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

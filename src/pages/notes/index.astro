@@ -1,0 +1,36 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/posts';
+import { getNotes } from '../../lib/notes';
+
+const notes = await getNotes();
+const entries = await Promise.all(
+  notes.map(async (note) => ({ note, Content: (await render(note)).Content })),
+);
+---
+
+<BaseLayout title="Notes" description="Short notes, kept apart from the longer posts.">
+  <link slot="head" rel="alternate" type="application/rss+xml" title="Astrix notes" href="/notes/rss.xml" />
+  <h1 class="page-title">Notes</h1>
+  {
+    entries.length > 0 ? (
+      entries.map(({ note, Content }) => (
+        <article class="note">
+          <h2 class="note-title">
+            <a href={`/notes/${note.id}/`}>{note.data.title}</a>
+          </h2>
+          <p class="post-meta">
+            <time datetime={note.data.date.toISOString()}>{formatDate(note.data.date)}</time>
+            {note.data.draft && ' · draft'}
+          </p>
+          <div class="prose">
+            <Content />
+          </div>
+        </article>
+      ))
+    ) : (
+      <p class="empty">Nothing here yet.</p>
+    )
+  }
+</BaseLayout>

@@ -1,0 +1,34 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, socials } from '../config/site';
+import { formatDate } from '../lib/posts';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({ params: { id: page.id }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+
+// The About page describes the person behind the site.
+const jsonLd =
+  page.id === 'about'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: site.author,
+        url: new URL('/', Astro.site).href,
+        sameAs: socials.map((social) => social.href).filter((href) => /^https?:\/\//.test(href)),
+      }
+    : undefined;
+---
+
+<BaseLayout title={page.data.title} description={page.data.description} jsonLd={jsonLd}>
+  <h1 class="page-title">{page.data.title}</h1>
+  {page.data.updated && <p class="page-meta">Updated {formatDate(page.data.updated)}</p>}
+  <div class="prose">
+    <Content />
+  </div>
+</BaseLayout>

@@ -1,0 +1,34 @@
+---
+import type { Project } from '../lib/projects';
+
+interface Props {
+  projects: Project[];
+  /** Adds the language and last push date next to the star count. */
+  detailed?: boolean;
+}
+
+const { projects, detailed = false } = Astro.props;
+
+const meta = ({ data }: Project) =>
+  [
+    detailed ? data.language : undefined,
+    `★ ${data.stars}`,
+    detailed && data.pushedAt ? `pushed ${data.pushedAt.toISOString().slice(0, 7)}` : undefined,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+---
+
+<ul class="projects">
+  {
+    projects.map((project) => (
+      <li>
+        <a class="project" href={project.data.url}>
+          <span class="project-name">{project.data.name}</span>
+          <span class="project-desc">{project.data.description}</span>
+          <span class="project-meta">{meta(project)}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

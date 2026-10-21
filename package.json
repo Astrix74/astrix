@@ -1,0 +1,31 @@
+{
+  "name": "astrix",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.18.0",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "new": "node scripts/new.mjs",
+    "deploy": "astro build && wrangler deploy"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.4.1",
+    "astro-og-canvas": "^0.13.2",
+    "canvaskit-wasm": "^0.42.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.11",
+    "@types/node": "^22.20.5",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.151.3"
+  }
+}

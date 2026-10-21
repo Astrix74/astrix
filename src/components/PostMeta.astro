@@ -1,0 +1,42 @@
+---
+import { formatDate, readingMinutes, type Post } from '../lib/posts';
+import { tagUrl } from '../lib/tags';
+
+interface Props {
+  post: Post;
+}
+
+interface Item {
+  text: string;
+  href?: string;
+  datetime?: string;
+}
+
+const { post } = Astro.props;
+const { date, updated, tags, draft } = post.data;
+
+const items: Item[] = [{ text: formatDate(date), datetime: date.toISOString() }];
+if (updated && formatDate(updated) !== formatDate(date)) {
+  items.push({ text: `updated ${formatDate(updated)}`, datetime: updated.toISOString() });
+}
+items.push({ text: `${readingMinutes(post.body)} min read` });
+for (const tag of tags) items.push({ text: tag, href: tagUrl(tag) });
+if (draft) items.push({ text: 'draft' });
+---
+
+<p class="post-meta">
+  {
+    items.map((item, index) => (
+      <>
+        {index > 0 && ' · '}
+        {item.href ? (
+          <a href={item.href}>{item.text}</a>
+        ) : item.datetime ? (
+          <time datetime={item.datetime}>{item.text}</time>
+        ) : (
+          <span>{item.text}</span>
+        )}
+      </>
+    ))
+  }
+</p>
