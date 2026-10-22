@@ -16,11 +16,13 @@
     "deploy": "astro build && wrangler deploy"
   },
   "dependencies": {
+    "@astrojs/markdown-satteri": "0.4.4",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.4.1",
     "astro-og-canvas": "^0.13.2",
-    "canvaskit-wasm": "^0.42.0"
+    "canvaskit-wasm": "^0.42.0",
+    "katex": "^0.19.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.11",

@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPapers } from '../../lib/papers';
+import { formatDate } from '../../lib/posts';
+
+const papers = await getPapers();
+---
+
+<BaseLayout title="Papers" description="Long-form analysis: a question, the derivation, and experiments you can rerun.">
+  <h1 class="page-title">Papers</h1>
+  <p class="page-intro">
+    Longer pieces of analysis, each built around one question: the derivation, experiments you can rerun from the
+    code in the paper, and what it does and does not show. They are not peer-reviewed.
+  </p>
+  {
+    papers.length > 0 ? (
+      <ul class="entries papers">
+        {papers.map((paper) => (
+          <li>
+            <time class="date" datetime={paper.data.date.toISOString()}>
+              {formatDate(paper.data.date)}
+            </time>
+            <div class="paper-item">
+              <a href={`/papers/${paper.id}/`}>
+                {paper.data.title}
+                {paper.data.draft && <span class="draft"> (draft)</span>}
+              </a>
+              <p class="paper-desc">{paper.data.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="empty">Nothing published yet.</p>
+    )
+  }
+</BaseLayout>

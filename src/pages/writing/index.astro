@@ -9,8 +9,12 @@ const years = [...new Set(posts.map((post) => post.data.date.getUTCFullYear()))]
 const hasTags = collectTags(posts).length > 0;
 ---
 
-<BaseLayout title="Writing" description="Everything I have written, newest first.">
+<BaseLayout title="Writing" description="Every article, newest first, including the chapters of each series.">
   <h1 class="page-title">Writing</h1>
+  <p class="page-intro">
+    Articles, newest first, including every chapter of the <a href="/series/">series</a>. Shorter pieces are in
+    <a href="/notes/">notes</a>, and longer original analysis is in <a href="/papers/">papers</a>.
+  </p>
   {hasTags && <p class="page-meta"><a href="/writing/tags/">Browse by tag</a></p>}
   {
     years.length > 0 ? (

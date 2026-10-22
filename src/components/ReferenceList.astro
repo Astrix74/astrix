@@ -1,0 +1,41 @@
+---
+import { entryHref, type CitingEntry, type Reference } from '../lib/references';
+
+interface Props {
+  references: Reference[];
+  /** Entries that cite each reference, by reference id. Adds a line linking to them. */
+  citedBy?: Map<string, CitingEntry[]>;
+}
+
+const { references, citedBy } = Astro.props;
+---
+
+<ol class="reference-list">
+  {
+    references.map((reference) => {
+      const entries = citedBy?.get(reference.id) ?? [];
+      return (
+        <li>
+          <span class="date">{reference.data.year}</span>
+          <div class="reference">
+            <a class="reference-title" href={reference.data.url}>
+              {reference.data.title}
+            </a>
+            <span class="reference-meta">{[reference.data.authors, reference.data.venue].filter(Boolean).join(' · ')}</span>
+            {entries.length > 0 && (
+              <span class="reference-cited">
+                {'Discussed in '}
+                {entries.map((entry, i) => (
+                  <>
+                    {i > 0 && ', '}
+                    <a href={entryHref(entry)}>{entry.data.title}</a>
+                  </>
+                ))}
+              </span>
+            )}
+          </div>
+        </li>
+      );
+    })
+  }
+</ol>

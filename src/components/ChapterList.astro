@@ -1,0 +1,33 @@
+---
+import type { Post } from '../lib/posts';
+
+interface Props {
+  chapters: Post[];
+  /** Titles of chapters not written yet, listed after the others. */
+  planned?: string[];
+}
+
+const { chapters, planned = [] } = Astro.props;
+---
+
+<ol class="entries chapters">
+  {
+    chapters.map((post) => (
+      <li>
+        <span class="date">Ch {post.data.chapter}</span>
+        <a href={`/writing/${post.id}/`}>
+          {post.data.title}
+          {post.data.draft && <span class="draft"> (draft)</span>}
+        </a>
+      </li>
+    ))
+  }
+  {
+    planned.map((title) => (
+      <li class="planned">
+        <span class="date">coming</span>
+        <span class="planned-title">{title}</span>
+      </li>
+    ))
+  }
+</ol>

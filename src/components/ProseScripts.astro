@@ -1,0 +1,40 @@
+---
+// Section links and copy buttons for every .prose block on the page. Pages read the same without it.
+---
+
+<script>
+  for (const heading of document.querySelectorAll<HTMLHeadingElement>('.prose :is(h2, h3)[id]:not(.sr-only)')) {
+    const link = document.createElement('a');
+    link.className = 'anchor';
+    link.href = `#${heading.id}`;
+    link.textContent = '#';
+    link.setAttribute('aria-label', `Link to this section: ${heading.textContent}`);
+    heading.append(link);
+  }
+
+  for (const pre of document.querySelectorAll<HTMLPreElement>('.prose pre')) {
+    const code = pre.querySelector('code');
+    if (!code) continue;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block';
+    pre.replaceWith(wrapper);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy';
+    button.textContent = 'copy';
+    button.setAttribute('aria-label', 'Copy this code to the clipboard');
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(code.innerText);
+        button.textContent = 'copied';
+      } catch {
+        button.textContent = 'failed';
+      }
+      setTimeout(() => (button.textContent = 'copy'), 1500);
+    });
+
+    wrapper.append(pre, button);
+  }
+</script>

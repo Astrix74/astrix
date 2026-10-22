@@ -6,6 +6,7 @@
   --muted: #6a675f;
   --line: #dedbd2;
   --accent: #1f4e8c;
+  --warn: #8a5a12;
   --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
   --mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 }
@@ -18,6 +19,7 @@
     --muted: #a19d92;
     --line: #36342f;
     --accent: #8db3ff;
+    --warn: #e2a95b;
   }
 }
 
@@ -106,7 +108,8 @@ a:focus-visible {
 
 .site-header nav {
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 0 24px;
   font-family: var(--mono);
   font-size: 13px;
 }
@@ -210,7 +213,7 @@ main {
 
 @media (max-width: 480px) {
   .site-header nav {
-    gap: 18px;
+    gap: 0 18px;
   }
 }
 
@@ -238,6 +241,25 @@ main {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+.page-intro {
+  margin: -8px 0 32px;
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.lead-next {
+  margin: 16px 0 0;
+  font-size: 19px;
+}
+
+.lead-next a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .empty {
@@ -348,6 +370,12 @@ main {
   text-wrap: balance;
 }
 
+@media (max-width: 480px) {
+  .post-title {
+    font-size: 32px;
+  }
+}
+
 .post-meta {
   margin: 16px 0 0;
   font-family: var(--mono);
@@ -373,6 +401,12 @@ main {
 .prose blockquote,
 .prose table {
   margin: 24px 0 0;
+}
+
+/* Not on pre: the text-wrap shorthand would turn line wrapping back on inside code blocks. */
+.prose p,
+.prose li,
+.prose blockquote {
   text-wrap: pretty;
 }
 
@@ -439,6 +473,15 @@ main {
 
 .prose pre code {
   font-family: inherit;
+}
+
+/* Code needs more width than prose: on wide screens, code blocks extend past the text column. */
+@media (min-width: 880px) {
+  .prose > pre,
+  .prose > .code-block {
+    margin-right: -96px;
+    margin-left: -96px;
+  }
 }
 
 .astro-code,
@@ -613,4 +656,220 @@ main {
   gap: 0 24px;
   margin-top: 24px;
   font-size: 17px;
+}
+
+/* Math, callouts and footnotes */
+
+.prose .katex {
+  font-size: 1.08em;
+}
+
+.prose .katex-display {
+  margin: 24px 0 0;
+  padding: 4px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.prose .callout {
+  margin: 24px 0 0;
+  padding: 16px 20px;
+  border-left: 2px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  background: var(--surface);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.prose .callout[data-kind='warning'],
+.prose .callout[data-kind='caution'] {
+  border-left-color: var(--warn);
+}
+
+.prose .callout > :first-child {
+  margin-top: 0;
+}
+
+.prose .callout-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.prose .callout-label + * {
+  margin-top: 8px;
+}
+
+.prose sup,
+.prose sub {
+  line-height: 0;
+}
+
+.prose [data-footnote-ref] {
+  padding: 0 0.15em;
+  font-family: var(--mono);
+  font-size: 0.75em;
+  text-decoration: none;
+}
+
+.prose .footnotes {
+  margin-top: 48px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.prose .footnotes ol {
+  margin-top: 16px;
+  padding-left: 24px;
+}
+
+.prose .footnotes li p {
+  margin: 0;
+}
+
+.prose [data-footnote-backref] {
+  text-decoration: none;
+}
+
+/* Papers */
+
+.paper-item {
+  display: flex;
+  flex: 1 1 280px;
+  flex-direction: column;
+}
+
+.paper-item a {
+  padding: 10px 0 2px;
+  font-size: 19px;
+}
+
+.paper-desc {
+  margin: 0 0 8px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.abstract {
+  margin: 32px 0 0;
+  padding: 20px 24px;
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.abstract p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.prose figure {
+  margin: 32px 0 0;
+  overflow-x: auto;
+}
+
+/* Charts keep a legible size on phones and scroll sideways, like code. */
+.prose figure img {
+  display: block;
+  width: 100%;
+  min-width: 560px;
+}
+
+.prose figcaption {
+  margin-top: 10px;
+  font-size: 15px;
+  font-style: normal;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* Series and the reading list */
+
+.series-list,
+.reference-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.series-list li,
+.reference-list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
+  align-items: baseline;
+  padding: 10px 0;
+}
+
+.series-item,
+.reference {
+  display: flex;
+  flex: 1 1 280px;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.series-title {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.series-desc {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.series-meta,
+.reference-cited {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.series-meta a,
+.reference-cited a,
+.chapter-line a,
+.byline a {
+  color: var(--accent);
+}
+
+.reference-title {
+  font-size: 18px;
+}
+
+.reference-meta {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.section-chapters {
+  margin-top: 48px;
+}
+
+.chapters .planned {
+  color: var(--muted);
+}
+
+.planned-title {
+  flex: 1 1 280px;
+  padding: 10px 0;
+  font-size: 19px;
+}
+
+.chapter-line,
+.byline {
+  margin: 8px 0 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
 }

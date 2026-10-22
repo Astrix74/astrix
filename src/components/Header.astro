@@ -1,15 +1,19 @@
 ---
 import { site } from '../config/site';
+import { getProjects } from '../lib/projects';
 
 const path = Astro.url.pathname;
 const isCurrent = (href: string) => path.startsWith(href);
+// The projects page stays out of the menu until there is something on it.
+const hasProjects = (await getProjects()).length > 0;
+const items = site.nav.filter((item) => hasProjects || item.href !== '/projects/');
 ---
 
 <header class="site-header">
   <a class="brand" href="/">{site.title}</a>
   <nav aria-label="Primary">
     {
-      site.nav.map((item) => (
+      items.map((item) => (
         <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
           {item.label}
         </a>

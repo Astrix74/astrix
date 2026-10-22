@@ -5,6 +5,9 @@ date: 2026-10-21
 tags: [meta]
 draft: true
 cover: ./sample-image.png
+references: [vaswani2017]   # citation keys from src/content/references.yaml, listed under the post
+# series: transformers   # a file name from src/content/series; needs a chapter number too
+# chapter: 4
 # project: my-repo   # a repo name from the projects list, or "owner/name"; adds a project link under the post
 # canonical: https://example.com/original-post/   # set when the post was first published elsewhere
 # updated: 2026-11-02   # shown next to the date
@@ -35,6 +38,28 @@ export function greet(name: string) {
 Inline `code` uses the monospace face too.
 
 > A quote is set in italics and indented.
+
+## Math
+
+Inline math sits in single dollar signs, so $e^{i\pi} + 1 = 0$ stays in the sentence. Write `\$` for a literal dollar sign, as in \$100. Display math goes between double dollar signs on their own lines:
+
+$$
+\operatorname{Attention}(Q, K, V) = \operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right) V
+$$
+
+Formulas are rendered when the site is built, and a formula KaTeX cannot read stops the build with the file name. Keep math out of headings: the contents list shows heading text as typed.
+
+## Callouts and footnotes
+
+> [!TIP] What to remember
+> A quote that starts with `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]` or `[!CAUTION]` becomes a callout. Text after the marker replaces the default label.
+
+> [!WARNING]
+> Warnings and cautions get a warm rule instead of the accent colour.
+
+Footnotes work the GitHub way.[^aside] They are collected at the end of the post, with links back.
+
+[^aside]: Use them for asides. Sources go in the `references` field instead: mention the authors and year in the text, and the full reference is listed under the post.
 
 ## Images
 

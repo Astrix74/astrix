@@ -1,0 +1,408 @@
+# Works cited by posts and notes. Each id is the citation key an entry lists in `references:`.
+# Checked against the arXiv or publisher page on 2026-10-22. Year is the first public version.
+# Long author lists keep the first three names.
+
+- id: robbins1951
+  title: "A Stochastic Approximation Method"
+  authors: "Herbert Robbins, Sutton Monro"
+  year: 1951
+  venue: "Annals of Mathematical Statistics"
+  url: https://doi.org/10.1214/aoms/1177729586
+
+- id: rumelhart1986
+  title: "Learning representations by back-propagating errors"
+  authors: "David E. Rumelhart, Geoffrey E. Hinton, Ronald J. Williams"
+  year: 1986
+  venue: "Nature"
+  url: https://doi.org/10.1038/323533a0
+
+- id: legg2007
+  title: "Universal Intelligence: A Definition of Machine Intelligence"
+  authors: "Shane Legg, Marcus Hutter"
+  year: 2007
+  venue: "Minds and Machines"
+  url: https://arxiv.org/abs/0712.3329
+
+- id: glorot2010
+  title: "Understanding the difficulty of training deep feedforward neural networks"
+  authors: "Xavier Glorot, Yoshua Bengio"
+  year: 2010
+  venue: "AISTATS 2010"
+  url: https://proceedings.mlr.press/v9/glorot10a.html
+
+- id: bahdanau2014
+  title: "Neural Machine Translation by Jointly Learning to Align and Translate"
+  authors: "Dzmitry Bahdanau, Kyunghyun Cho, Yoshua Bengio"
+  year: 2014
+  venue: "ICLR 2015"
+  url: https://arxiv.org/abs/1409.0473
+
+- id: kingma2014
+  title: "Adam: A Method for Stochastic Optimization"
+  authors: "Diederik P. Kingma, Jimmy Ba"
+  year: 2014
+  venue: "ICLR 2015"
+  url: https://arxiv.org/abs/1412.6980
+
+- id: baydin2015
+  title: "Automatic differentiation in machine learning: a survey"
+  authors: "Atilim Gunes Baydin, Barak A. Pearlmutter, Alexey Andreyevich Radul, Jeffrey Mark Siskind"
+  year: 2015
+  venue: "JMLR 2018"
+  url: https://arxiv.org/abs/1502.05767
+
+- id: he2015delving
+  title: "Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification"
+  authors: "Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun"
+  year: 2015
+  url: https://arxiv.org/abs/1502.01852
+
+- id: ioffe2015
+  title: "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift"
+  authors: "Sergey Ioffe, Christian Szegedy"
+  year: 2015
+  url: https://arxiv.org/abs/1502.03167
+
+- id: hinton2015
+  title: "Distilling the Knowledge in a Neural Network"
+  authors: "Geoffrey Hinton, Oriol Vinyals, Jeff Dean"
+  year: 2015
+  venue: "NIPS 2014 Deep Learning Workshop"
+  url: https://arxiv.org/abs/1503.02531
+
+- id: he2015resnet
+  title: "Deep Residual Learning for Image Recognition"
+  authors: "Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun"
+  year: 2015
+  url: https://arxiv.org/abs/1512.03385
+
+- id: bottou2016
+  title: "Optimization Methods for Large-Scale Machine Learning"
+  authors: "Léon Bottou, Frank E. Curtis, Jorge Nocedal"
+  year: 2016
+  url: https://arxiv.org/abs/1606.04838
+
+- id: hendrycks2016
+  title: "Gaussian Error Linear Units (GELUs)"
+  authors: "Dan Hendrycks, Kevin Gimpel"
+  year: 2016
+  url: https://arxiv.org/abs/1606.08415
+
+- id: ba2016
+  title: "Layer Normalization"
+  authors: "Jimmy Lei Ba, Jamie Ryan Kiros, Geoffrey E. Hinton"
+  year: 2016
+  url: https://arxiv.org/abs/1607.06450
+
+- id: vaswani2017
+  title: "Attention Is All You Need"
+  authors: "Ashish Vaswani, Noam Shazeer, Niki Parmar, et al."
+  year: 2017
+  url: https://arxiv.org/abs/1706.03762
+
+- id: loshchilov2017
+  title: "Decoupled Weight Decay Regularization"
+  authors: "Ilya Loshchilov, Frank Hutter"
+  year: 2017
+  venue: "ICLR 2019"
+  url: https://arxiv.org/abs/1711.05101
+
+- id: shaw2018
+  title: "Self-Attention with Relative Position Representations"
+  authors: "Peter Shaw, Jakob Uszkoreit, Ashish Vaswani"
+  year: 2018
+  venue: "NAACL 2018"
+  url: https://arxiv.org/abs/1803.02155
+
+- id: sutton2019
+  title: "The Bitter Lesson"
+  authors: "Rich Sutton"
+  year: 2019
+  venue: "Incomplete Ideas"
+  url: http://www.incompleteideas.net/IncIdeas/BitterLesson.html
+
+- id: zhang2019
+  title: "Root Mean Square Layer Normalization"
+  authors: "Biao Zhang, Rico Sennrich"
+  year: 2019
+  venue: "NeurIPS 2019"
+  url: https://arxiv.org/abs/1910.07467
+
+- id: chollet2019
+  title: "On the Measure of Intelligence"
+  authors: "François Chollet"
+  year: 2019
+  url: https://arxiv.org/abs/1911.01547
+
+- id: shazeer2019
+  title: "Fast Transformer Decoding: One Write-Head is All You Need"
+  authors: "Noam Shazeer"
+  year: 2019
+  url: https://arxiv.org/abs/1911.02150
+
+- id: kaplan2020
+  title: "Scaling Laws for Neural Language Models"
+  authors: "Jared Kaplan, Sam McCandlish, Tom Henighan, et al."
+  year: 2020
+  url: https://arxiv.org/abs/2001.08361
+
+- id: xiong2020
+  title: "On Layer Normalization in the Transformer Architecture"
+  authors: "Ruibin Xiong, Yunchang Yang, Di He, et al."
+  year: 2020
+  venue: "ICML 2020"
+  url: https://arxiv.org/abs/2002.04745
+
+- id: shazeer2020
+  title: "GLU Variants Improve Transformer"
+  authors: "Noam Shazeer"
+  year: 2020
+  url: https://arxiv.org/abs/2002.05202
+
+- id: lewis2020
+  title: "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+  authors: "Patrick Lewis, Ethan Perez, Aleksandra Piktus, et al."
+  year: 2020
+  venue: "NeurIPS 2020"
+  url: https://arxiv.org/abs/2005.11401
+
+- id: su2021
+  title: "RoFormer: Enhanced Transformer with Rotary Position Embedding"
+  authors: "Jianlin Su, Yu Lu, Shengfeng Pan, et al."
+  year: 2021
+  url: https://arxiv.org/abs/2104.09864
+
+- id: press2021
+  title: "Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation"
+  authors: "Ofir Press, Noah A. Smith, Mike Lewis"
+  year: 2021
+  url: https://arxiv.org/abs/2108.12409
+
+- id: elhage2021
+  title: "A Mathematical Framework for Transformer Circuits"
+  authors: "Nelson Elhage, Neel Nanda, Catherine Olsson, et al."
+  year: 2021
+  venue: "Transformer Circuits Thread"
+  url: https://transformer-circuits.pub/2021/framework/index.html
+
+- id: hoffmann2022
+  title: "Training Compute-Optimal Large Language Models"
+  authors: "Jordan Hoffmann, Sebastian Borgeaud, Arthur Mensch, et al."
+  year: 2022
+  url: https://arxiv.org/abs/2203.15556
+
+- id: yao2022
+  title: "ReAct: Synergizing Reasoning and Acting in Language Models"
+  authors: "Shunyu Yao, Jeffrey Zhao, Dian Yu, et al."
+  year: 2022
+  url: https://arxiv.org/abs/2210.03629
+
+- id: pope2022
+  title: "Efficiently Scaling Transformer Inference"
+  authors: "Reiner Pope, Sholto Douglas, Aakanksha Chowdhery, et al."
+  year: 2022
+  url: https://arxiv.org/abs/2211.05102
+
+- id: schick2023
+  title: "Toolformer: Language Models Can Teach Themselves to Use Tools"
+  authors: "Timo Schick, Jane Dwivedi-Yu, Roberto Dessì, et al."
+  year: 2023
+  url: https://arxiv.org/abs/2302.04761
+
+- id: shinn2023
+  title: "Reflexion: Language Agents with Verbal Reinforcement Learning"
+  authors: "Noah Shinn, Federico Cassano, Edward Berman, et al."
+  year: 2023
+  url: https://arxiv.org/abs/2303.11366
+
+- id: ainslie2023
+  title: "GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints"
+  authors: "Joshua Ainslie, James Lee-Thorp, Michiel de Jong, et al."
+  year: 2023
+  venue: "EMNLP 2023"
+  url: https://arxiv.org/abs/2305.13245
+
+- id: liu2023
+  title: "Lost in the Middle: How Language Models Use Long Contexts"
+  authors: "Nelson F. Liu, Kevin Lin, John Hewitt, et al."
+  year: 2023
+  venue: "TACL 2023"
+  url: https://arxiv.org/abs/2307.03172
+
+- id: jimenez2023
+  title: "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?"
+  authors: "Carlos E. Jimenez, John Yang, Alexander Wettig, et al."
+  year: 2023
+  venue: "ICLR 2024"
+  url: https://arxiv.org/abs/2310.06770
+
+- id: morris2023
+  title: "Levels of AGI for Operationalizing Progress on the Path to AGI"
+  authors: "Meredith Ringel Morris, Jascha Sohl-Dickstein, Noah Fiedel, et al."
+  year: 2023
+  venue: "ICML 2024"
+  url: https://arxiv.org/abs/2311.02462
+
+- id: yang2024
+  title: "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering"
+  authors: "John Yang, Carlos E. Jimenez, Alexander Wettig, et al."
+  year: 2024
+  url: https://arxiv.org/abs/2405.15793
+
+- id: mcp2024
+  title: "Introducing the Model Context Protocol"
+  authors: "Anthropic"
+  year: 2024
+  url: https://www.anthropic.com/news/model-context-protocol
+
+- id: chollet2024arc
+  title: "ARC Prize 2024: Technical Report"
+  authors: "Francois Chollet, Mike Knoop, Gregory Kamradt, Bryan Landers"
+  year: 2024
+  url: https://arxiv.org/abs/2412.04604
+
+- id: anthropic2024agents
+  title: "Building effective agents"
+  authors: "Erik S., Barry Zhang"
+  year: 2024
+  venue: "Anthropic"
+  url: https://www.anthropic.com/research/building-effective-agents
+
+- id: anthropic2025tools
+  title: "Writing effective tools for agents — with agents"
+  authors: "Ken Aizawa"
+  year: 2025
+  venue: "Anthropic"
+  url: https://www.anthropic.com/research/writing-tools-for-agents
+
+- id: anthropic2025context
+  title: "Effective context engineering for AI agents"
+  authors: "Prithvi Rajasekaran, Ethan Dixon, Carly Ryan, Jeremy Hadfield"
+  year: 2025
+  venue: "Anthropic"
+  url: https://www.anthropic.com/research/effective-context-engineering-for-ai-agents
+
+- id: he2016identity
+  title: "Identity Mappings in Deep Residual Networks"
+  authors: "Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun"
+  year: 2016
+  venue: "ECCV 2016"
+  url: https://arxiv.org/abs/1603.05027
+
+- id: santurkar2018
+  title: "How Does Batch Normalization Help Optimization?"
+  authors: "Shibani Santurkar, Dimitris Tsipras, Andrew Ilyas, Aleksander Madry"
+  year: 2018
+  venue: "NeurIPS 2018"
+  url: https://arxiv.org/abs/1805.11604
+
+- id: brown2020
+  title: "Language Models are Few-Shot Learners"
+  authors: "Tom B. Brown, Benjamin Mann, Nick Ryder, et al."
+  year: 2020
+  url: https://arxiv.org/abs/2005.14165
+
+- id: touvron2023
+  title: "LLaMA: Open and Efficient Foundation Language Models"
+  authors: "Hugo Touvron, Thibaut Lavril, Gautier Izacard, et al."
+  year: 2023
+  url: https://arxiv.org/abs/2302.13971
+
+- id: derrida1980
+  title: "Random-Energy Model: Limit of a Family of Disordered Models"
+  authors: "B. Derrida"
+  year: 1980
+  venue: "Physical Review Letters"
+  url: https://doi.org/10.1103/PhysRevLett.45.79
+
+- id: derrida1981
+  title: "Random-energy model: An exactly solvable model of disordered systems"
+  authors: "Bernard Derrida"
+  year: 1981
+  venue: "Physical Review B"
+  url: https://doi.org/10.1103/PhysRevB.24.2613
+
+- id: benarous2005
+  title: "Limit theorems for sums of random exponentials"
+  authors: "Gérard Ben Arous, Leonid V. Bogachev, Stanislav A. Molchanov"
+  year: 2005
+  venue: "Probability Theory and Related Fields"
+  url: https://doi.org/10.1007/s00440-004-0406-3
+
+- id: lucibello2023
+  title: "The Exponential Capacity of Dense Associative Memories"
+  authors: "Carlo Lucibello, Marc Mézard"
+  year: 2023
+  venue: "Physical Review Letters (2024)"
+  url: https://arxiv.org/abs/2304.14964
+
+- id: giorlandino2025
+  title: "Two failure modes of deep transformers and how to avoid them: a unified theory of signal propagation at initialisation"
+  authors: "Alessio Giorlandino, Sebastian Goldt"
+  year: 2025
+  venue: "ICLR 2026"
+  url: https://arxiv.org/abs/2505.24333
+
+- id: levien2026
+  title: "Phase Transitions in Learning Driven by Extremal Data"
+  authors: "Ethan Levien, Trevor GrandPre"
+  year: 2026
+  url: https://arxiv.org/abs/2610.29531
+
+- id: alemanno2026
+  title: "Attention over noisy examples: generalization and memorization in the exponential Hopfield network"
+  authors: "Francesco Alemanno"
+  year: 2026
+  url: https://arxiv.org/abs/2610.22191
+
+- id: ramsauer2020
+  title: "Hopfield Networks is All You Need"
+  authors: "Hubert Ramsauer, Bernhard Schäfl, Johannes Lehner, et al."
+  year: 2020
+  url: https://arxiv.org/abs/2008.02217
+
+- id: zhai2023
+  title: "Stabilizing Transformer Training by Preventing Attention Entropy Collapse"
+  authors: "Shuangfei Zhai, Tatiana Likhomanenko, Etai Littwin, et al."
+  year: 2023
+  venue: "ICML 2023"
+  url: https://arxiv.org/abs/2303.06296
+
+- id: chiang2022
+  title: "Overcoming a Theoretical Limitation of Self-Attention"
+  authors: "David Chiang, Peter Cholak"
+  year: 2022
+  venue: "ACL 2022"
+  url: https://arxiv.org/abs/2202.12172
+
+- id: jin2023
+  title: "Training-free Diffusion Model Adaptation for Variable-Sized Text-to-Image Synthesis"
+  authors: "Zhiyu Jin, Xuli Shen, Bin Li, Xiangyang Xue"
+  year: 2023
+  venue: "NeurIPS 2023"
+  url: https://arxiv.org/abs/2306.08645
+
+- id: peng2023
+  title: "YaRN: Efficient Context Window Extension of Large Language Models"
+  authors: "Bowen Peng, Jeffrey Quesnelle, Honglu Fan, Enrico Shippole"
+  year: 2023
+  url: https://arxiv.org/abs/2309.00071
+
+- id: nakanishi2025
+  title: "Scalable-Softmax Is Superior for Attention"
+  authors: "Ken M. Nakanishi"
+  year: 2025
+  url: https://arxiv.org/abs/2501.19399
+
+- id: besiroglu2024
+  title: "Chinchilla Scaling: A replication attempt"
+  authors: "Tamay Besiroglu, Ege Erdil, Matthew Barnett, Josh You"
+  year: 2024
+  url: https://arxiv.org/abs/2404.10102
+
+- id: sardana2023
+  title: "Beyond Chinchilla-Optimal: Accounting for Inference in Language Model Scaling Laws"
+  authors: "Nikhil Sardana, Jacob Portes, Sasha Doubov, Jonathan Frankle"
+  year: 2023
+  venue: "ICML 2024"
+  url: https://arxiv.org/abs/2401.00448

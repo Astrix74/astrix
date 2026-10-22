@@ -1,0 +1,18 @@
+---
+import { site } from '../config/site';
+
+interface Props {
+  /** Overrides the site-wide writer for this entry. An empty string hides the line. */
+  writtenBy?: string;
+}
+
+const writtenBy = Astro.props.writtenBy ?? site.writtenBy;
+---
+
+{
+  writtenBy && (
+    <p class="byline">
+      Written by {writtenBy} · <a href="/about/#how-this-site-is-written">how this site works</a>
+    </p>
+  )
+}

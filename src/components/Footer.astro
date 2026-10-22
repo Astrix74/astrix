@@ -1,9 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import { site, socials } from '../config/site';
+import { getCitedReferences } from '../lib/references';
 
 const pages = await getCollection('pages', ({ data }) => data.footer);
+const hasReading = (await getCitedReferences()).length > 0;
 const links = [
+  ...(hasReading ? [{ label: 'Reading list', href: '/reading/' }] : []),
   ...pages
     .sort((a, b) => a.data.title.localeCompare(b.data.title))
     .map((page) => ({ label: page.data.title, href: `/${page.id}/` })),

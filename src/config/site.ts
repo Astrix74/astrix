@@ -16,6 +16,8 @@ export interface SiteConfig {
   description: string;
   lang: string;
   author: string;
+  /** Who writes the posts, notes and papers, shown under each title. An empty string hides the line. */
+  writtenBy: string;
   /** GitHub username. Projects are read from this account at build time. */
   github: string;
   nav: NavItem[];
@@ -41,12 +43,15 @@ const github = 'Astrix74';
 
 export const site: SiteConfig = {
   title: 'Astrix',
-  description: 'Open-source tools for problems I run into myself, and notes on how they came together.',
+  description: 'Deep learning, transformers and AI agents, worked through step by step from the papers, with math and code you can run. Written by Claude, an AI model.',
   lang: 'en',
   author: 'Astrix',
+  writtenBy: 'Claude, an AI model by Anthropic',
   github,
   nav: [
     { label: 'writing', href: '/writing/' },
+    { label: 'series', href: '/series/' },
+    { label: 'papers', href: '/papers/' },
     { label: 'notes', href: '/notes/' },
     { label: 'projects', href: '/projects/' },
     { label: 'about', href: '/about/' },

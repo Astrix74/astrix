@@ -1,6 +1,8 @@
 ---
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Byline from '../../components/Byline.astro';
+import ProseScripts from '../../components/ProseScripts.astro';
 import { formatDate } from '../../lib/posts';
 import { getNotes } from '../../lib/notes';
 
@@ -10,9 +12,14 @@ const entries = await Promise.all(
 );
 ---
 
-<BaseLayout title="Notes" description="Short notes, kept apart from the longer posts.">
+<BaseLayout title="Notes" description="Short notes: one formula, one idea, one paper.">
   <link slot="head" rel="alternate" type="application/rss+xml" title="Astrix notes" href="/notes/rss.xml" />
   <h1 class="page-title">Notes</h1>
+  <p class="page-intro">
+    Short pieces: one formula, one idea or one paper at a time. Longer explanations are in <a href="/writing/">writing</a>,
+    and original analysis is in <a href="/papers/">papers</a>.
+  </p>
+  <Byline />
   {
     entries.length > 0 ? (
       entries.map(({ note, Content }) => (
@@ -33,4 +40,5 @@ const entries = await Promise.all(
       <p class="empty">Nothing here yet.</p>
     )
   }
+  <ProseScripts />
 </BaseLayout>

@@ -1,0 +1,74 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ChapterList from '../../components/ChapterList.astro';
+import { site } from '../../config/site';
+import { getSeries, seriesUrl } from '../../lib/series';
+
+export async function getStaticPaths() {
+  const items = await getSeries();
+  const visible = new Map(items.map(({ series }) => [series.id, series]));
+  return items.map(({ series, chapters }) => ({
+    params: { id: series.id },
+    props: {
+      series,
+      chapters,
+      // Only prerequisites that are published themselves.
+      prerequisites: series.data.prerequisites.flatMap(({ id }) => visible.get(id) ?? []),
+    },
+  }));
+}
+
+const { series, chapters, prerequisites } = Astro.props;
+const { Content } = await render(series);
+const url = new URL(Astro.url.pathname, Astro.site).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWorkSeries',
+  name: series.data.title,
+  description: series.data.description,
+  url,
+  author: { '@type': 'Person', name: site.author, url: new URL('/', Astro.site).href },
+  hasPart: chapters.map((post) => ({
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    position: post.data.chapter,
+    url: new URL(`/writing/${post.id}/`, Astro.site).href,
+  })),
+};
+---
+
+<BaseLayout
+  title={series.data.title}
+  description={series.data.description}
+  image={`/og/series/${series.id}.png`}
+  jsonLd={jsonLd}
+>
+  <a class="back" href="/series/">← series</a>
+  <h1 class="post-title">{series.data.title}</h1>
+  <p class="post-meta">
+    {chapters.length} {chapters.length === 1 ? 'chapter' : 'chapters'}
+    {
+      prerequisites.length > 0 && (
+        <>
+          {' · read first: '}
+          {prerequisites.map((other, i) => (
+            <>
+              {i > 0 && ', '}
+              <a href={seriesUrl(other.id)}>{other.data.title}</a>
+            </>
+          ))}
+        </>
+      )
+    }
+  </p>
+  <div class="prose">
+    <Content />
+  </div>
+  <section class="section-chapters" aria-labelledby="chapters">
+    <h2 class="label" id="chapters">Chapters</h2>
+    <ChapterList chapters={chapters} planned={series.data.planned} />
+  </section>
+  <a class="more" href={`/writing/${chapters[0].id}/`}>Start with chapter {chapters[0].data.chapter}</a>
+</BaseLayout>

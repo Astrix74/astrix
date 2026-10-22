@@ -5,7 +5,10 @@ interface Props {
   headings: MarkdownHeading[];
 }
 
-const items = Astro.props.headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+// The footnotes section brings its own visually hidden heading; it is not part of the post's outline.
+const items = Astro.props.headings.filter(
+  (heading) => (heading.depth === 2 || heading.depth === 3) && heading.slug !== 'footnote-label',
+);
 ---
 
 {
