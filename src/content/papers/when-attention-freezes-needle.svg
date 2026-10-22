@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" width="640" height="340" role="img" aria-labelledby="t d" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">
+<title id="t">Weight on a needle key as the context grows, under three logit scalings</title>
+<desc id="d">Left: a soft head with a well-separated needle; the log-n scaling keeps most of the needle's weight while the others fade. Right: a sharp head whose needle is only marginally above the distractors; every scaling fails once a distractor outscores the needle.</desc>
+<style>
+  .grid { stroke: #ebe8e0; stroke-width: 1; }
+  .axis { stroke: #cfcbc1; stroke-width: 1; }
+  .ink { fill: #1c1b19; }
+  .muted { fill: #6a675f; }
+  .line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .dot { stroke: #fbfaf7; stroke-width: 2; }
+  .limit { stroke: #8a867c; }
+  .o1 { stroke: #86b6ef; } .o2 { stroke: #3987e5; } .o3 { stroke: #1c5cab; } .o4 { stroke: #0d366b; }
+  .c1 { stroke: #2a78d6; } .c2 { stroke: #eb6834; } .c3 { stroke: #1baf7a; }
+  .f1 { fill: #2a78d6; } .f2 { fill: #eb6834; } .f3 { fill: #1baf7a; }
+  @media (prefers-color-scheme: dark) {
+    .grid { stroke: #262421; }
+    .axis { stroke: #3d3a35; }
+    .ink { fill: #ece9e1; }
+    .muted { fill: #a19d92; }
+    .dot { stroke: #171614; }
+    .limit { stroke: #8f8b81; }
+    .o1 { stroke: #184f95; } .o2 { stroke: #2a78d6; } .o3 { stroke: #6da7ec; } .o4 { stroke: #b7d3f6; }
+    .c1 { stroke: #3987e5; } .c2 { stroke: #d95926; } .c3 { stroke: #199e70; }
+    .f1 { fill: #3987e5; } .f2 { fill: #d95926; } .f3 { fill: #199e70; }
+  }
+</style>
+<line x1="62" y1="18" x2="78" y2="18" class="line c1"/><circle cx="70" cy="18" r="4" class="dot f1"/>
+<text x="84.0" y="22.0" class="ink" text-anchor="start">no scaling</text>
+<line x1="169.0" y1="18" x2="185.0" y2="18" class="line c2"/><circle cx="177.0" cy="18" r="4" class="dot f2"/>
+<text x="191.0" y="22.0" class="ink" text-anchor="start">× √(ln n ÷ ln n₀)</text>
+<line x1="322.9" y1="18" x2="338.9" y2="18" class="line c3"/><circle cx="330.9" cy="18" r="4" class="dot f3"/>
+<text x="344.9" y="22.0" class="ink" text-anchor="start">× ln n ÷ ln n₀</text>
+<text x="62.0" y="54.0" class="ink" text-anchor="start">soft head, clear needle</text>
+<line x1="62" y1="288.0" x2="324" y2="288.0" class="axis"/>
+<text x="54.0" y="292.0" class="muted" text-anchor="end">0</text>
+<line x1="62" y1="244.0" x2="324" y2="244.0" class="grid"/>
+<text x="54.0" y="248.0" class="muted" text-anchor="end">0.1</text>
+<line x1="62" y1="200.0" x2="324" y2="200.0" class="grid"/>
+<text x="54.0" y="204.0" class="muted" text-anchor="end">0.2</text>
+<line x1="62" y1="156.0" x2="324" y2="156.0" class="grid"/>
+<text x="54.0" y="160.0" class="muted" text-anchor="end">0.3</text>
+<line x1="62" y1="112.0" x2="324" y2="112.0" class="grid"/>
+<text x="54.0" y="116.0" class="muted" text-anchor="end">0.4</text>
+<line x1="62" y1="68.0" x2="324" y2="68.0" class="grid"/>
+<text x="54.0" y="72.0" class="muted" text-anchor="end">0.5</text>
+<line x1="62.0" y1="68" x2="62.0" y2="288" class="grid"/>
+<text x="62.0" y="304.0" class="muted" text-anchor="middle">4K</text>
+<line x1="127.5" y1="68" x2="127.5" y2="288" class="grid"/>
+<text x="127.5" y="304.0" class="muted" text-anchor="middle">16K</text>
+<line x1="193.0" y1="68" x2="193.0" y2="288" class="grid"/>
+<text x="193.0" y="304.0" class="muted" text-anchor="middle">64K</text>
+<line x1="258.5" y1="68" x2="258.5" y2="288" class="grid"/>
+<text x="258.5" y="304.0" class="muted" text-anchor="middle">256K</text>
+<line x1="324.0" y1="68" x2="324.0" y2="288" class="grid"/>
+<text x="324.0" y="304.0" class="muted" text-anchor="middle">1M</text>
+<text x="193.0" y="322.0" class="muted" text-anchor="middle">context length (keys)</text>
+<text x="22.0" y="178.0" class="muted" text-anchor="middle" transform="rotate(-90 22 178.0)">weight on the needle</text>
+<path d="M62.0,68.1 L94.8,141.5 L127.5,200.0 L160.2,239.2 L193.0,262.2 L225.8,274.7 L258.5,281.2 L291.2,284.6 L324.0,286.3" class="line c1"/>
+<circle cx="62.0" cy="68.1" r="4" class="dot f1"/><circle cx="94.8" cy="141.5" r="4" class="dot f1"/><circle cx="127.5" cy="200.0" r="4" class="dot f1"/><circle cx="160.2" cy="239.2" r="4" class="dot f1"/><circle cx="193.0" cy="262.2" r="4" class="dot f1"/><circle cx="225.8" cy="274.7" r="4" class="dot f1"/><circle cx="258.5" cy="281.2" r="4" class="dot f1"/><circle cx="291.2" cy="284.6" r="4" class="dot f1"/><circle cx="324.0" cy="286.3" r="4" class="dot f1"/>
+<path d="M62.0,68.1 L94.8,108.9 L127.5,148.1 L160.2,183.5 L193.0,212.7 L225.8,235.5 L258.5,252.4 L291.2,264.3 L324.0,272.6" class="line c2"/>
+<circle cx="62.0" cy="68.1" r="4" class="dot f2"/><circle cx="94.8" cy="108.9" r="4" class="dot f2"/><circle cx="127.5" cy="148.1" r="4" class="dot f2"/><circle cx="160.2" cy="183.5" r="4" class="dot f2"/><circle cx="193.0" cy="212.7" r="4" class="dot f2"/><circle cx="225.8" cy="235.5" r="4" class="dot f2"/><circle cx="258.5" cy="252.4" r="4" class="dot f2"/><circle cx="291.2" cy="264.3" r="4" class="dot f2"/><circle cx="324.0" cy="272.6" r="4" class="dot f2"/>
+<path d="M62.0,68.1 L94.8,73.1 L127.5,78.7 L160.2,85.5 L193.0,92.6 L225.8,100.5 L258.5,109.0 L291.2,118.1 L324.0,127.8" class="line c3"/>
+<circle cx="62.0" cy="68.1" r="4" class="dot f3"/><circle cx="94.8" cy="73.1" r="4" class="dot f3"/><circle cx="127.5" cy="78.7" r="4" class="dot f3"/><circle cx="160.2" cy="85.5" r="4" class="dot f3"/><circle cx="193.0" cy="92.6" r="4" class="dot f3"/><circle cx="225.8" cy="100.5" r="4" class="dot f3"/><circle cx="258.5" cy="109.0" r="4" class="dot f3"/><circle cx="291.2" cy="118.1" r="4" class="dot f3"/><circle cx="324.0" cy="127.8" r="4" class="dot f3"/>
+<text x="368.0" y="54.0" class="ink" text-anchor="start">sharp head, marginal needle</text>
+<line x1="368" y1="288.0" x2="630" y2="288.0" class="axis"/>
+<line x1="368" y1="244.0" x2="630" y2="244.0" class="grid"/>
+<line x1="368" y1="200.0" x2="630" y2="200.0" class="grid"/>
+<line x1="368" y1="156.0" x2="630" y2="156.0" class="grid"/>
+<line x1="368" y1="112.0" x2="630" y2="112.0" class="grid"/>
+<line x1="368" y1="68.0" x2="630" y2="68.0" class="grid"/>
+<line x1="368.0" y1="68" x2="368.0" y2="288" class="grid"/>
+<text x="368.0" y="304.0" class="muted" text-anchor="middle">4K</text>
+<line x1="433.5" y1="68" x2="433.5" y2="288" class="grid"/>
+<text x="433.5" y="304.0" class="muted" text-anchor="middle">16K</text>
+<line x1="499.0" y1="68" x2="499.0" y2="288" class="grid"/>
+<text x="499.0" y="304.0" class="muted" text-anchor="middle">64K</text>
+<line x1="564.5" y1="68" x2="564.5" y2="288" class="grid"/>
+<text x="564.5" y="304.0" class="muted" text-anchor="middle">256K</text>
+<line x1="630.0" y1="68" x2="630.0" y2="288" class="grid"/>
+<text x="630.0" y="304.0" class="muted" text-anchor="middle">1M</text>
+<text x="499.0" y="322.0" class="muted" text-anchor="middle">context length (keys)</text>
+<path d="M368.0,69.4 L400.8,148.7 L433.5,204.2 L466.2,243.3 L499.0,265.2 L531.8,276.1 L564.5,282.0 L597.2,285.0 L630.0,286.5" class="line c1"/>
+<circle cx="368.0" cy="69.4" r="4" class="dot f1"/><circle cx="400.8" cy="148.7" r="4" class="dot f1"/><circle cx="433.5" cy="204.2" r="4" class="dot f1"/><circle cx="466.2" cy="243.3" r="4" class="dot f1"/><circle cx="499.0" cy="265.2" r="4" class="dot f1"/><circle cx="531.8" cy="276.1" r="4" class="dot f1"/><circle cx="564.5" cy="282.0" r="4" class="dot f1"/><circle cx="597.2" cy="285.0" r="4" class="dot f1"/><circle cx="630.0" cy="286.5" r="4" class="dot f1"/>
+<path d="M368.0,69.4 L400.8,132.7 L433.5,180.7 L466.2,222.7 L499.0,251.4 L531.8,266.5 L564.5,276.3 L597.2,281.8 L630.0,284.7" class="line c2"/>
+<circle cx="368.0" cy="69.4" r="4" class="dot f2"/><circle cx="400.8" cy="132.7" r="4" class="dot f2"/><circle cx="433.5" cy="180.7" r="4" class="dot f2"/><circle cx="466.2" cy="222.7" r="4" class="dot f2"/><circle cx="499.0" cy="251.4" r="4" class="dot f2"/><circle cx="531.8" cy="266.5" r="4" class="dot f2"/><circle cx="564.5" cy="276.3" r="4" class="dot f2"/><circle cx="597.2" cy="281.8" r="4" class="dot f2"/><circle cx="630.0" cy="284.7" r="4" class="dot f2"/>
+<path d="M368.0,69.4 L400.8,116.3 L433.5,154.6 L466.2,197.8 L499.0,234.5 L531.8,254.1 L564.5,269.8 L597.2,278.8 L630.0,283.3" class="line c3"/>
+<circle cx="368.0" cy="69.4" r="4" class="dot f3"/><circle cx="400.8" cy="116.3" r="4" class="dot f3"/><circle cx="433.5" cy="154.6" r="4" class="dot f3"/><circle cx="466.2" cy="197.8" r="4" class="dot f3"/><circle cx="499.0" cy="234.5" r="4" class="dot f3"/><circle cx="531.8" cy="254.1" r="4" class="dot f3"/><circle cx="564.5" cy="269.8" r="4" class="dot f3"/><circle cx="597.2" cy="278.8" r="4" class="dot f3"/><circle cx="630.0" cy="283.3" r="4" class="dot f3"/>
+</svg>
