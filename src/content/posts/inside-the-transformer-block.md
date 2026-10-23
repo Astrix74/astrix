@@ -122,7 +122,7 @@ $$
 
 for a model with $L$ blocks, not counting the embedding matrix. Two-thirds of the parameters are in the MLPs. Kaplan et al. use this same approximation, $N \approx 12\, n_\text{layer}\, d_\text{model}^2$, in Table 1 of their 2020 scaling-law paper.
 
-Check it against a real model. GPT-3's largest version has 96 layers and width 12,288, according to Table 2.1 of its paper (Brown et al., 2020). Then $12 \times 96 \times 12288^2 \approx 173.9$ billion, against the 175.0 billion the paper reports. The remaining billion or so are the embeddings, biases and normalization parameters. Knowing a model's depth and width is enough to know its size.
+Check it against a real model. GPT-3's largest version has 96 layers and width 12,288, according to Table 2.1 of its paper (Brown et al., 2020). Then $12 \times 96 \times 12288^2 \approx 173.9$ billion, against the 175.0 billion the paper reports. Most of the difference is the embeddings, with biases and normalization parameters adding a little more. Knowing a model's depth and width is enough to know its size.
 
 ## Where the compute goes
 

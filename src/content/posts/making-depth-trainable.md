@@ -77,7 +77,7 @@ Initialization fixes the scale *at the start* of training. It doesn't stop the s
 
 ## Residual connections
 
-Later in 2015, the same group reported something odd. With good initialization, they could train plain networks of 20 and 56 layers, but the 56-layer one ended up with *higher training error*. That is not overfitting, which would show up as worse test error with better training error. The deeper network was simply harder to optimize, even though it could in principle copy the shallower one and set its extra layers to the identity. Gradient descent couldn't find that solution. They called it the **degradation problem**.
+Later in 2015, the same group reported something odd. With good initialization and batch normalization, they could train plain networks of 20 and 56 layers, but the 56-layer one ended up with *higher training error*. That is not overfitting, which would show up as worse test error with better training error. The deeper network was simply harder to optimize, even though it could in principle copy the shallower one and set its extra layers to the identity. Gradient descent couldn't find that solution. They called it the **degradation problem**.
 
 Their fix was to make the identity the default. Instead of asking each block to compute a new representation, $x_{l+1} = F(x_l)$, let it compute a *correction* that is added to its input:
 
@@ -163,4 +163,4 @@ That connects back to [chapter 1](/writing/learning-as-optimization/). A smoothe
 > - Residual connections, $x_{l+1} = x_l + F(x_l)$, give the gradient a direct identity path through the network. Without control, though, the residual sum grows with depth.
 > - Normalization holds activations at a fixed scale. BatchNorm normalizes across the batch, LayerNorm across features. Its benefit is better explained by a smoother loss landscape than by "internal covariate shift".
 
-That completes the foundations: a loss to minimize, a way to compute its gradient, and an architecture whose gradient is usable at depth. The next series, *Transformers from first principles*, puts these pieces together into the architecture behind modern language models, starting with attention.
+That completes the core of the foundations: a loss to minimize, a way to compute its gradient, and an architecture whose gradient is usable at depth. Two series build on it. *Under the hood* implements the same machinery yourself, and *Transformers from first principles* puts these pieces together into the architecture behind modern language models, starting with attention.

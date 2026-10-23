@@ -24,7 +24,7 @@ $$
 
 Training is the problem $\min_\theta \hat{L}(\theta)$. That's the whole definition.
 
-One caveat is worth stating now, because it never goes away. We do not actually care about the examples we have; we care about the ones we will see later. The quantity we want small is the *expected* risk over the whole data distribution, and $\hat L$ is only an estimate of it from a sample. The gap between the two is called generalization, and it gets its own chapter later in this series.
+One caveat is worth stating now, because it never goes away. We do not actually care about the examples we have; we care about the ones we will see later. The quantity we want small is the *expected* risk over the whole data distribution, and $\hat L$ is only an estimate of it from a sample. The gap between the two is the generalization gap, and generalization gets its own chapter later in this series.
 
 ## Where loss functions come from
 

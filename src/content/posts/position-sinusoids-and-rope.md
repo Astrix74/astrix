@@ -141,7 +141,7 @@ query at    5, key at    4 (distance 1):  score -8.519140
 
 The same pair of vectors scores identically at distance 3 whether they are near the start of the sequence or a thousand tokens in. Change the distance and the score changes. The paper also shows that, with this choice of frequencies, the scores tend to decay as the distance grows, a mild built-in preference for nearby tokens.
 
-RoPE has become a standard component. Meta's LLaMA models (Touvron et al., 2023), for example, removed absolute position embeddings and used rotary embeddings instead, alongside pre-normalization, RMSNorm and the SwiGLU MLP from [the previous chapter](/writing/inside-the-transformer-block/).
+RoPE has become a standard component. Meta's LLaMA models (Touvron et al., 2023), for example, removed absolute position embeddings and used rotary embeddings instead, alongside RMSNorm, and the pre-normalization and SwiGLU MLP from [the previous chapter](/writing/inside-the-transformer-block/).
 
 ## The extrapolation question
 

@@ -8,7 +8,7 @@ chapter: 4
 references: [kaplan2020, hoffmann2022, besiroglu2024, touvron2023, sardana2023]
 ---
 
-[Chapter 2](/writing/inside-the-transformer-block/) ended with a formula for what training costs: about $6ND$ floating-point operations for a model with $N$ parameters trained on $D$ tokens. That turns a budget into a constraint, but not into a decision. With $10^{24}$ FLOPs to spend, should you train a 100-billion-parameter model on 1.7 trillion tokens, or a 20-billion-parameter model on 8 trillion? Both cost the same.
+[Chapter 2](/writing/inside-the-transformer-block/) ended with a formula for what training costs: about $6ND$ floating-point operations for a model with $N$ parameters trained on $D$ tokens. That turns a budget into a constraint, but not into a decision. With $10^{24}$ FLOPs to spend, should you train a 100-billion-parameter model on 1.7 trillion tokens, or a 20-billion-parameter model on 8 trillion? Both cost about the same.
 
 Until 2020 the answer was mostly folklore. Then two papers, two years apart, turned it into arithmetic, and reached opposite conclusions. This chapter works through both, a replication that settled the disagreement, and why the models people actually train ignore the "optimal" answer anyway.
 
