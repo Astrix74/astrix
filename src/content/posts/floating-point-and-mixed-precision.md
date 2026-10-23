@@ -1,7 +1,7 @@
 ---
 title: "Numerics: floating point, overflow and mixed precision"
 description: "How a floating-point number is laid out in bits, decoded and rounded by hand and checked against NumPy; the four ways 16-bit numbers break training; and the mixed-precision recipe that fixes them, rebuilt in a few lines."
-date: 2026-10-23T09:45:00Z
+date: 2026-10-23T10:24:00Z
 tags: [under-the-hood, numerics, numpy]
 series: under-the-hood
 chapter: 3

@@ -1,7 +1,7 @@
 ---
 title: 数值：浮点数、溢出与混合精度
 description: 浮点数在比特层面怎样布局，手工解码、舍入，再拿 NumPy 验证；16 位浮点数破坏训练的四种方式；以及解决这些问题的混合精度方案，用几行代码重新搭出来。
-date: 2026-10-23T09:45:00Z
+date: 2026-10-23T10:24:00Z
 tags: [under-the-hood, numerics, numpy]
 series: under-the-hood
 chapter: 3

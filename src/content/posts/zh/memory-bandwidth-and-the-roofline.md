@@ -1,7 +1,7 @@
 ---
 title: GPU：为什么内存带宽决定速度
 description: 芯片有两种速度：算得有多快，搬字节有多快。逐一算出 Transformer 里每个操作受哪一种速度限制，在笔记本电脑上测出同样的效应，再看看批处理和融合为什么如此重要。
-date: 2026-10-23T10:11:00Z
+date: 2026-10-23T10:25:00Z
 tags: [under-the-hood, gpus, numpy]
 series: under-the-hood
 chapter: 4

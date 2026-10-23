@@ -1,7 +1,7 @@
 ---
 title: "GPUs: why memory bandwidth decides speed"
 description: "A chip has two speeds: how fast it computes and how fast it moves bytes. Work out which one limits each operation in a transformer, measure the same effect on a laptop, and see why batching and fusion matter so much."
-date: 2026-10-23T10:11:00Z
+date: 2026-10-23T10:25:00Z
 tags: [under-the-hood, gpus, numpy]
 series: under-the-hood
 chapter: 4
