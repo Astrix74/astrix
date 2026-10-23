@@ -16,7 +16,7 @@ This chapter is about designing that interface: why it matters as much as it doe
 
 SWE-bench (Jimenez et al., 2023) made the stakes concrete. It is a set of 2,294 software-engineering problems built from "real GitHub issues and corresponding pull requests" across 12 popular Python repositories. A model gets the codebase and the issue, and it is "tasked with editing the codebase to address the issue". A patch counts only if it applies and the tests chosen to check the fix all pass. When the paper came out, the best model it evaluated, Claude 2, resolved 1.96% of the issues.
 
-A year later, SWE-agent (Yang et al., 2024) asked what happens if you design the tools for the agent rather than handing it a human's shell. Its starting point: "LM agents represent a new category of end users with their own needs and abilities", and they "would benefit from specially-built interfaces to the software they use". The authors built an **agent-computer interface** (ACI):
+The next year, SWE-agent (Yang et al., 2024) asked what happens if you design the tools for the agent rather than handing it a human's shell. Its starting point: "LM agents represent a new category of end users with their own needs and abilities", and they "would benefit from specially-built interfaces to the software they use". The authors built an **agent-computer interface** (ACI):
 - a file viewer that shows at most 100 numbered lines at a time
 - search commands that return a summary of results, not raw output
 - an edit command that replaces a range of lines and runs a linter, discarding edits the linter flags as invalid and asking the agent to try again.
@@ -80,6 +80,9 @@ def read_file(path, offset=1, limit=100):
 
 def edit_file(path, old, new):
     """Replace one exact occurrence of `old`. Fails loudly instead of guessing."""
+    if path not in FILES:
+        known = ", ".join(sorted(FILES))
+        raise FileNotFoundError(f"{path} does not exist. Known files: {known}")
     text = FILES[path]
     count = text.count(old)
     if count == 0:

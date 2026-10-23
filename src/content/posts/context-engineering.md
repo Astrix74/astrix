@@ -8,7 +8,7 @@ chapter: 3
 references: [anthropic2025context, liu2023, lewis2020, shinn2023]
 ---
 
-In the loop from [chapter 1](/writing/what-a-harness-is/), every model call sends the entire `messages` list: the instructions, the task, every tool call and every tool result so far. The model has no other memory. Whatever is in that list is everything it knows about the task, and whatever isn't, it doesn't know. The list is the model's context window, and over a long task, managing it becomes the central design problem of a harness.
+In the loop from [chapter 1](/writing/what-a-harness-is/), every model call sends the entire `messages` list: the task, every tool call and every tool result so far. Real harnesses also send their instructions and tool definitions with every call. The model has no other memory. Whatever is in that list is everything it knows about the task, and whatever isn't, it doesn't know. The list is the model's context window, and over a long task, managing it becomes the central design problem of a harness.
 
 Anthropic's engineering team calls this **context engineering** (September 2025): "the set of strategies for curating and maintaining the optimal set of tokens" during a model's work. Prompt engineering is about writing good instructions. Context engineering is about everything that ends up in the window, over the whole life of a task.
 
@@ -45,7 +45,7 @@ def tokens(text):
 def clear_old_results(messages, keep_last=3):
     """Replace all but the most recent tool results with a one-line placeholder."""
     tool_turns = [i for i, m in enumerate(messages) if m["role"] == "tool"]
-    old = set(tool_turns[:-keep_last])
+    old = set(tool_turns[:max(0, len(tool_turns) - keep_last)])
     return [{**m, "content": f"[cleared: {m['about']}]"} if i in old else m
             for i, m in enumerate(messages)]
 

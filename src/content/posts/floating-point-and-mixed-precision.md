@@ -121,7 +121,7 @@ bfloat16  3.3895e+38        1.175e-38           9.184e-41   0.00781
 
 The assertions pass, so the formulas reproduce NumPy's `finfo` exactly. Read the table as a trade:
 
-- **float16** keeps decent precision, about three decimal digits, but its range is narrow. Anything above 65,504 overflows to infinity, and anything below about $6 \times 10^{-8}$ becomes zero.
+- **float16** keeps decent precision, about three decimal digits, but its range is narrow. Anything above 65,504 overflows to infinity, and anything below about $3 \times 10^{-8}$ becomes zero.
 - **bfloat16** has the range of float32, but its epsilon is 0.0078. Near 1, it cannot tell 1.000 from 1.003.
 
 Each of the failures below comes from one side of this trade.
@@ -219,7 +219,7 @@ Without scaling, almost a third of the gradients vanish, and another 42% are sub
 
 ### Swamping
 
-To add two floats, hardware lines up their binary points, which shifts the smaller number's bits to the right. If the smaller number is less than half the gap between representable values near the larger one, it rounds away completely. For a weight update this means nothing happens, and nothing reports it. Micikevicius et al. put the threshold for float16 at a weight 2048 times larger than its update, which is $2^{11}$, half the gap at the weight's scale. The same reasoning with bfloat16's 7 fraction bits gives a ratio of only 256 to 512.
+To add two floats, hardware lines up their binary points, which shifts the smaller number's bits to the right. If the smaller number is less than half the gap between representable values near the larger one, it rounds away completely. For a weight update this means nothing happens, and nothing reports it. Micikevicius et al. put the threshold for float16 at a weight at least 2048 times larger than its update: $2^{11}$, which puts the update below half the gap at the weight's scale. The same reasoning with bfloat16's 7 fraction bits gives a ratio of only 256.
 
 ```python
 w32, w16, wbf16 = np.float32(1.0), np.float16(1.0), to_bfloat16(1.0)
@@ -236,7 +236,7 @@ after 1000 updates of 0.001, starting from 1:
 float32 2.0000467  float16 1.977  bfloat16 1.0
 ```
 
-The bfloat16 weight never moves: each update of 0.001 is less than half of the 0.0078 gap above 1, so every addition rounds straight back to 1. float16 is subtler. The update survives, but it is rounded to $2^{-10} \approx 0.000977$ each time, so after a thousand steps the weight is 2.3% short, with no error and no warning.
+The bfloat16 weight never moves: each update of 0.001 is less than half of the 0.0078 gap above 1, so every addition rounds straight back to 1. float16 is subtler. The update survives, but it is rounded to $2^{-10} \approx 0.000977$ each time, so after a thousand steps the weight has grown by 0.977 instead of 1, which is 2.3% too little, with no error and no warning.
 
 ### Accumulation
 
@@ -354,7 +354,7 @@ The two large gradients overflow at scale 65,536 and again at 32,768, so both st
 
 PyTorch splits the recipe across two tools.
 
-- **`torch.autocast`** picks a precision per operation inside a region of code. The PyTorch documentation lists the CUDA operations that run in float16, such as `matmul`, `linear`, `bmm` and the convolutions, and the ones that run in float32, such as `exp`, `log`, `softmax`, `log_softmax`, `sum`, `layer_norm`, `cross_entropy` and `mse_loss`. That is step 3 above, written as two lists.
+- **`torch.autocast`** picks a precision per operation inside a region of code. The PyTorch documentation lists the CUDA operations that run in float16, such as `matmul`, `linear`, `bmm` and the convolutions, and the ones that run in float32, such as `exp`, `log`, `softmax`, `log_softmax`, `sum`, `layer_norm`, `cross_entropy` and `mse_loss`. That is steps 2 and 3 above, written as two lists.
 - **`torch.amp.GradScaler`** is the class above. Its defaults are an initial scale of 65,536, growth by 2 after 2000 clean steps, and back-off by 0.5. With bfloat16, the scaler is usually left out.
 
 Kalamkar et al. (2019) studied bfloat16 training across image, speech, language and recommendation models, and give its range as the reason it is easy to use: "Maintaining the same range as FP32 is important to ensure that no hyper-parameter tuning is required for convergence".
@@ -371,7 +371,7 @@ E5M2 largest: 57344.0
 E4M3 largest, IEEE-style: 240.0
 ```
 
-E4M3 doesn't follow IEEE. It gives up infinities and keeps only one NaN pattern, and reuses the freed bit patterns as ordinary numbers. That raises its largest value from the 240 above to 448. Even so, one range rarely fits every tensor in a network, so FP8 training multiplies tensors by scaling factors before converting them, often a separate factor for each tensor. In the paper's words, "the general idea is to choose a scaling factor such that the maximum magnitude in the tensor becomes close to the maximum representable magnitude in the corresponding format." It is loss scaling again, applied to every tensor rather than just the gradients.
+E4M3 doesn't follow IEEE. It gives up infinities and keeps only one fraction pattern for NaN, and reuses the freed bit patterns as ordinary numbers. That raises its largest value from the 240 above to 448. Even so, one range rarely fits every tensor in a network, so FP8 training multiplies tensors by scaling factors before converting them, often a separate factor for each tensor. In the paper's words, "the general idea is to choose a scaling factor such that the maximum magnitude in the tensor becomes close to the maximum representable magnitude in the corresponding format." It is loss scaling again, applied to every tensor rather than just the gradients.
 
 ## Going further
 
