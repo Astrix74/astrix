@@ -72,7 +72,7 @@ Tokenization, training at small scale, sampling, and how big a model should be f
 
 Where the time and memory actually go, and why the same math can run fast or slow.
 
-- **On this site:** the memory layout section of the [tensors chapter](/writing/tensors-memory-shapes-and-strides/), the FLOP counts in [Inside the transformer block](/writing/inside-the-transformer-block/), and the [KV-cache note](/notes/kv-cache-arithmetic/). A chapter on GPUs is planned for Under the hood.
+- **On this site:** the memory layout section of the [tensors chapter](/writing/tensors-memory-shapes-and-strides/), the FLOP counts in [Inside the transformer block](/writing/inside-the-transformer-block/), the [KV-cache note](/notes/kv-cache-arithmetic/), and [GPUs: why memory bandwidth decides speed](/writing/memory-bandwidth-and-the-roofline/).
 - **Elsewhere:** Edward Yang's [PyTorch internals](http://blog.ezyang.com/2019/05/pytorch-internals/), on how a tensor operation reaches its kernel. Karpathy's [llm.c](https://github.com/karpathy/llm.c) trains GPT-2 in plain C and CUDA, with a CPU reference of about a thousand lines in one file. [tinygrad](https://github.com/tinygrad/tinygrad), in its own words, is "something between PyTorch and karpathy/micrograd": a working framework, much smaller than PyTorch.
 - **Checkpoint:** estimate the memory and compute of one training step before running it, then measure it.
 

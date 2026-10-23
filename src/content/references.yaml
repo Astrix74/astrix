@@ -453,3 +453,22 @@
   authors: "Paulius Micikevicius, Dusan Stosic, Neil Burgess, et al."
   year: 2022
   url: https://arxiv.org/abs/2209.05433
+
+- id: williams2009
+  title: "Roofline: An Insightful Visual Performance Model for Multicore Architectures"
+  authors: "Samuel Williams, Andrew Waterman, David Patterson"
+  year: 2009
+  venue: "Communications of the ACM"
+  url: https://doi.org/10.1145/1498765.1498785
+
+- id: he2022brrr
+  title: "Making Deep Learning Go Brrrr From First Principles"
+  authors: "Horace He"
+  year: 2022
+  url: https://horace.io/brrr_intro.html
+
+- id: dao2022
+  title: "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness"
+  authors: "Tri Dao, Daniel Y. Fu, Stefano Ermon, et al."
+  year: 2022
+  url: https://arxiv.org/abs/2205.14135

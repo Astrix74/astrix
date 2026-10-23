@@ -384,4 +384,4 @@ David Goldberg's "What Every Computer Scientist Should Know About Floating-Point
 > - Mixed precision means float32 master weights, 16-bit matrix multiplications with float32 accumulation, float32 reductions, softmax and losses, and, for float16, dynamic loss scaling.
 > - Low-precision failures are mostly silent. Check results against a float32 run, the same way gradients are checked against finite differences.
 
-The next chapter moves from number formats to hardware: why a GPU's speed is usually set by how fast it can move bytes, not how fast it can multiply.
+The [next chapter](/writing/memory-bandwidth-and-the-roofline/) moves from number formats to hardware: why a GPU's speed is usually set by how fast it can move bytes, not how fast it can multiply.
