@@ -70,6 +70,19 @@ A series is an ordered path through one topic. Tags group posts automatically; a
 
 `references.yaml` holds every work the site cites: one entry per paper or article with an `id` (the citation key), `title`, `authors`, `year`, an optional `venue`, and `url`. A post or note lists the keys it cites in `references:`; an unknown key stops the build, even in a draft. `/reading/` shows every work that something published cites, oldest first, with links to where it is discussed, and the footer links to it once there is one.
 
+### Translations
+
+The site is published in English and Simplified Chinese. English pages keep their unprefixed addresses; Chinese ones live under `/zh/`.
+
+- A translation is a file with the same name in a `zh/` folder next to the original: `posts/zh/scaling-laws.md` translates `posts/scaling-laws.md`, and is served at `/zh/writing/scaling-laws/`. The same goes for notes, papers, series introductions and pages.
+- Translate `title`, `description` (and a paper's `abstract`) and the body. `date`, `series`, `chapter`, `tags`, `references` and a series' `order` and `prerequisites` must match the original, or the build stops. A translation without an original also stops the build.
+- Untranslated entries are simply absent from the Chinese lists. The language switcher in the header goes to the page's translation when there is one, and to the other language's home page otherwise. `hreflang` links and the sitemap follow the same rule.
+- Interface text, in every language, is in `src/i18n/strings.ts`. The Chinese table must have the same shape as the English one, so a missing string is a type error. Language codes and the list of languages are in `src/i18n/index.ts`; adding a language means adding it there, a table in `strings.ts`, a folder of routes under `src/pages/<code>/` (copy `src/pages/zh/`), and default callout labels in `src/lib/markdown.ts`.
+- Two checks run in CI after the build:
+  - `pnpm check:links` checks every internal link and `#fragment`, and reports a Chinese page that links to an English page when a Chinese one exists.
+  - `pnpm check:translations` compares each translation with its original. Code blocks, inline code, formulas, numbers, links, footnotes, images, callouts, tables and the heading outline must match. Large numbers may be written with 万 and 亿, and month names as numbers. It also looks for `**` that failed to render, which happens in Chinese when the markers sit between punctuation and a character: write `**术语**：`, not `**术语：**`.
+- Chinese headings get Chinese `id`s, so a link to a section of a Chinese page uses the Chinese heading text.
+
 ## Projects
 
 The Projects section is read from GitHub whenever the site is built, so a new project appears on the next build. A repo is shown when it is:
