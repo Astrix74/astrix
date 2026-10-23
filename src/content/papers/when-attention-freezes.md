@@ -87,7 +87,7 @@ Jin et al. (2023) derive the same entropy formula when they adapt image models t
 
 The formula reaches zero entropy at $x = 1$, and the reason is visible in the integral behind $\mathbb{E}[e^{s}]$. The integrand $e^{s}\,e^{-s^2/2\sigma^2}$ peaks at $s = \sigma^2$: the average is carried by scores near $\sigma^2$. But a sample of $n$ Gaussians almost never contains a score above about $\sigma\sqrt{2 \ln n}$. As long as $\sigma^2 < \sigma\sqrt{2\ln n}$, that is $x < 1$, the scores that carry the average are present in the sample and the law of large numbers works. Beyond it, the average is carried by keys that are not there, and $Z$ is dominated by the few largest scores that are. The softmax **freezes** onto them.
 
-In the limit $n \to \infty$ this is a sharp transition, Derrida's freezing transition. Below it, $H / \ln n \to 1 - x^2$. Above it, $H / \ln n \to 0$, the weight sits on a handful of keys, and the participation ratio tends to $1 - 1/x$ (the REM result, stated for attention by Giorlandino and Goldt).
+In the limit $n \to \infty$ this is a sharp transition, Derrida's freezing transition. Below it, $H / \ln n \to 1 - x^2$. Above it, $H / \ln n \to 0$, the weight sits on a handful of keys, and the inverse participation ratio tends to $1 - 1/x$ (the REM result, stated for attention by Giorlandino and Goldt).
 
 The same argument applied to $\mathbb{E}[e^{2s}]$, whose integrand peaks at $2\sigma^2$, gives a second threshold at $x = 1/2$. Below it, $Z$ also has Gaussian fluctuations around its mean; above it, it does not (Ben Arous, Bogachev and Molchanov, 2005; Giorlandino and Goldt point out its role for finite lengths). That turns out to be where practical lengths part company with the limit.
 
@@ -153,7 +153,7 @@ n       H / ln n at x = 1, 1.5, 2, 3    Y at x = 1, 1.5, 2, 3
 limit   0.000 0.000 0.000 0.000     0.000 0.333 0.500 0.667
 ```
 
-The participation ratio approaches $1 - 1/x$ from above, and the entropy share falls toward zero, but over a 512-fold increase in length they move by only 0.02 to 0.09. The distance to the limit depends on $n$ mainly through $\ln n$, which only grows from 6.9 to 13.2 across this table. (Standard errors, from the spread across rows, are between 0.001 and 0.02, largest for $Y$ at $2^{19}$.)
+The inverse participation ratio approaches $1 - 1/x$ from above, and the entropy share falls toward zero, but over a 512-fold increase in length they move by only 0.02 to 0.09. The distance to the limit depends on $n$ mainly through $\ln n$, which only grows from 6.9 to 13.2 across this table. (Standard errors, from the spread across rows, are between 0.001 and 0.02, largest for $Y$ at $2^{19}$.)
 
 The practical reading: **the phase diagram is the right map, but at the lengths models use, the border is a wide band, not a line.** Between $x \approx 0.5$ and well past $x = 1$, attention is neither diffuse nor frozen.
 
@@ -334,7 +334,7 @@ n       measured: none  sqrt-log  log     predicted: none  sqrt-log  log
 2^20     0.004   0.035   0.364           0.004   0.035   0.364
 ```
 
-The formula from section 5 predicts every measurement to the third decimal, because this head never leaves the diffuse regime. With no rescaling, the needle's weight falls from 0.5 to 0.004 by a million keys: the length tax, unpaid. The square-root rule pays part of it, and the log rule pays nearly all of it, keeping 0.36. The log rule works because it grows $c\mu$ in proportion to $\ln n$, which is exactly how the tax grows. What it does not quite cover is the $c^2/2$ term, which grows faster.
+The formula from section 5 predicts every measurement to within 0.001, because this head never leaves the diffuse regime. With no rescaling, the needle's weight falls from 0.5 to 0.004 by a million keys: the length tax, unpaid. The square-root rule pays part of it, and the log rule pays nearly all of it, keeping 0.36. The log rule works because it grows $c\mu$ in proportion to $\ln n$, which is exactly how the tax grows. What it does not quite cover is the $c^2/2$ term, which grows faster.
 
 ### A sharp head with a marginal needle
 
