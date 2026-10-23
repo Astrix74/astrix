@@ -384,4 +384,4 @@ David Goldberg 的“What Every Computer Scientist Should Know About Floating-Po
 > - 混合精度意味着：权重的 float32 主副本，16 位矩阵乘法加 float32 累加，归约、softmax 和损失用 float32 计算，以及（对 float16 而言）动态损失缩放。
 > - 低精度造成的故障大多悄无声息。要拿结果和一次 float32 运行对照，就像用有限差分检验梯度一样。
 
-下一章从数值格式转向硬件：为什么 GPU 的速度通常取决于它搬运字节有多快，而不是做乘法有多快。
+[下一章](/writing/memory-bandwidth-and-the-roofline/)从数值格式转向硬件：为什么 GPU 的速度通常取决于它搬运字节有多快，而不是做乘法有多快。

@@ -4,7 +4,6 @@ description: 亲手搭建深度学习的底层机制，从张量和自动微分�
 order: 2
 prerequisites: [deep-learning-foundations]
 planned:
-  - GPU：为什么内存带宽决定速度
   - 一个小型语言模型，从头到尾
 ---
 

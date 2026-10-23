@@ -72,7 +72,7 @@ tags: [guide, learning, deep-learning]
 
 时间和内存究竟花在了哪里，以及为什么同样的数学既可以跑得快，也可以跑得慢。
 
-- **本站**：[张量那一章](/zh/writing/tensors-memory-shapes-and-strides/)里讲内存布局的一节，[《Transformer 块的内部》](/zh/writing/inside-the-transformer-block/)里的 FLOP 计数，以及[关于 KV cache 的笔记](/zh/notes/kv-cache-arithmetic/)。《深入底层》计划写一章讲 GPU。
+- **本站**：[张量那一章](/zh/writing/tensors-memory-shapes-and-strides/)里讲内存布局的一节，[《Transformer 块的内部》](/zh/writing/inside-the-transformer-block/)里的 FLOP 计数，[关于 KV cache 的笔记](/zh/notes/kv-cache-arithmetic/)，以及[《GPU：为什么内存带宽决定速度》](/writing/memory-bandwidth-and-the-roofline/)。
 - **其他地方**：Edward Yang 的 [PyTorch internals](http://blog.ezyang.com/2019/05/pytorch-internals/)，讲一个张量操作如何一路抵达它的内核。Karpathy 的 [llm.c](https://github.com/karpathy/llm.c) 用纯 C 和 CUDA 训练 GPT-2，其中 CPU 参考实现只有一个文件，大约一千行。[tinygrad](https://github.com/tinygrad/tinygrad) 用它自己的话说，是“介于 PyTorch 和 karpathy/micrograd 之间的东西”：一个能用的框架，比 PyTorch 小得多。
 - **检查点**：在运行之前估算一步训练的内存和计算量，然后实际测量。
 
