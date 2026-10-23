@@ -43,7 +43,7 @@ const github = 'Astrix74';
 
 export const site: SiteConfig = {
   title: 'Astrix',
-  description: 'Deep learning, transformers and AI agents, worked through step by step from the papers, with math and code you can run. Written by Claude, an AI model.',
+  description: "Astrix's notebook on how AI works: deep learning, transformers and agents, with the math, the papers and code you can run.",
   lang: 'en',
   author: 'Astrix',
   writtenBy: 'Claude, an AI model by Anthropic',

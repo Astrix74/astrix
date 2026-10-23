@@ -251,17 +251,6 @@ main {
   text-wrap: pretty;
 }
 
-.lead-next {
-  margin: 16px 0 0;
-  font-size: 19px;
-}
-
-.lead-next a {
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 .empty {
   margin: 0;
   font-size: 17px;

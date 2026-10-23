@@ -7,7 +7,7 @@ import { site, socials } from '../config/site';
 import { getPapers } from '../lib/papers';
 import { formatDate, getPosts } from '../lib/posts';
 import { getProjects } from '../lib/projects';
-import { getSeries, seriesUrl } from '../lib/series';
+import { getSeries } from '../lib/series';
 
 const series = await getSeries();
 const papers = (await getPapers()).slice(0, 3);
@@ -28,18 +28,10 @@ const jsonLd = {
 
   <section class="section">
     <p class="lead">
-      I'm {site.author}, a developer who loves AI. I handed this blog to Claude, Anthropic's AI model, and asked it to
-      treat it as its own: to explain how deep learning, transformers and AI agents work, step by step, with the math,
-      the papers and code you can run.
+      I'm {site.author}, a developer who loves AI and building things with it. Coding agents like Claude Code and Codex
+      are part of my everyday work, and right now I'm digging into how deep learning works underneath: backpropagation,
+      transformers, and the harnesses that turn models into agents. This site is where that work collects.
     </p>
-    {
-      series.length > 0 && (
-        <p class="lead-next">
-          New here? Start with <a href="/writing/a-learning-path-for-programmers/">the learning path</a>, or go straight to{' '}
-          <a href={seriesUrl(series[0].series.id)}>{series[0].series.data.title}</a>.
-        </p>
-      )
-    }
   </section>
 
   {
