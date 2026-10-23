@@ -406,3 +406,24 @@
   year: 2023
   venue: "ICML 2024"
   url: https://arxiv.org/abs/2401.00448
+
+- id: elhage2022
+  title: "Toy Models of Superposition"
+  authors: "Nelson Elhage, Tristan Hume, Catherine Olsson, et al."
+  year: 2022
+  venue: "Transformer Circuits Thread"
+  url: https://transformer-circuits.pub/2022/toy_model/index.html
+
+- id: bricken2023
+  title: "Towards Monosemanticity: Decomposing Language Models With Dictionary Learning"
+  authors: "Trenton Bricken, Adly Templeton, Joshua Batson, et al."
+  year: 2023
+  venue: "Transformer Circuits Thread"
+  url: https://transformer-circuits.pub/2023/monosemantic-features/index.html
+
+- id: yang2019
+  title: "PyTorch internals"
+  authors: "Edward Z. Yang"
+  year: 2019
+  venue: "ezyang's blog"
+  url: http://blog.ezyang.com/2019/05/pytorch-internals/

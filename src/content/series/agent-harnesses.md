@@ -1,7 +1,7 @@
 ---
 title: Agent harnesses
 description: "The engineering around a language model that turns it into an agent: the loop, the tools, and the context it works from."
-order: 3
+order: 4
 prerequisites: [transformers]
 planned:
   - Evaluating agents

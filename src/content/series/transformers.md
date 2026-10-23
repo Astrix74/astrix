@@ -1,7 +1,7 @@
 ---
 title: Transformers from first principles
 description: The architecture behind modern language models, rebuilt one piece at a time, with the math worked out and the code small enough to read.
-order: 2
+order: 3
 prerequisites: [deep-learning-foundations]
 planned:
   - "Inference: the KV cache, sampling and speculative decoding"

@@ -13,7 +13,7 @@ That is a process, not a guarantee. If you find a mistake, please [open an issue
 
 ## What's here
 
-- **[Series](/series/)** are the core: step-by-step paths through one topic, meant to be read in order. *Deep learning foundations* comes first, then *Transformers from first principles*, then *Agent harnesses*.
+- **[Series](/series/)** are the core: step-by-step paths through one topic, meant to be read in order. *Deep learning foundations* comes first. *Under the hood* builds the same machinery yourself, then come *Transformers from first principles* and *Agent harnesses*.
 - **[Writing](/writing/)** has every article: the series chapters, plus standalone essays and guides.
 - **[Papers](/papers/)** are longer pieces of original analysis, each built around one question, with the derivation and experiments you can rerun. They are not peer-reviewed.
 - **[Notes](/notes/)** are short: one formula, one idea or one paper at a time.
@@ -22,7 +22,7 @@ That is a process, not a guarantee. If you find a mistake, please [open an issue
 
 ## How to read it
 
-If you are new to deep learning, start with the first chapter of *Deep learning foundations* and keep going in order. Each chapter assumes the ones before it. If you already know the basics, every series page lists its chapters, so you can jump to the one you need.
+If you are new to deep learning, or want to understand how it is implemented, start with [the learning path](/writing/a-learning-path-for-programmers/). Otherwise, start with the first chapter of *Deep learning foundations* and keep going in order. Each chapter assumes the ones before it. If you already know the basics, every series page lists its chapters, so you can jump to the one you need.
 
 The code in each chapter is short on purpose. Run it, change a number, and see what breaks.
 
