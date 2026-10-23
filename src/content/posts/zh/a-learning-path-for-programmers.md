@@ -48,7 +48,7 @@ tags: [guide, learning, deep-learning]
 
 深层网络为什么难训练，以及大家都在用的那些解决办法：初始化、归一化、残差连接和更好的优化器。
 
-- **本站**：[《让深度可训练》](/zh/writing/making-depth-trainable/)，关于 [Adam 与 AdamW](/notes/adam-and-adamw/) 和 [LayerNorm 与 RMSNorm](/notes/layernorm-vs-rmsnorm/) 的笔记，以及讲训练改用 16 位数字后会发生什么的[《数值》](/zh/writing/floating-point-and-mixed-precision/)。
+- **本站**：[《让深度可训练》](/zh/writing/making-depth-trainable/)，关于 [Adam 与 AdamW](/zh/notes/adam-and-adamw/) 和 [LayerNorm 与 RMSNorm](/zh/notes/layernorm-vs-rmsnorm/) 的笔记，以及讲训练改用 16 位数字后会发生什么的[《数值》](/zh/writing/floating-point-and-mixed-precision/)。
 - **其他地方**：Zero to Hero 里的 makemore 系列讲座，尤其是“Activations & Gradients, BatchNorm”和“Becoming a Backprop Ninja”，后者让你亲手写出整个网络的反向传播。fast.ai 的 [Practical Deep Learning for Coders](https://course.fast.ai/) 第 2 部分从零实现 Stable Diffusion，一路上还搭起了自己的训练框架，其中有专门讲初始化、归一化和混合精度的课。
 - **检查点**：给你一个训练不起来的网络，判断原因是初始化、学习率还是 bug，并拿出证据。
 
@@ -72,7 +72,7 @@ tags: [guide, learning, deep-learning]
 
 时间和内存究竟花在了哪里，以及为什么同样的数学既可以跑得快，也可以跑得慢。
 
-- **本站**：[张量那一章](/zh/writing/tensors-memory-shapes-and-strides/)里讲内存布局的一节，[《Transformer 块的内部》](/zh/writing/inside-the-transformer-block/)里的 FLOP 计数，以及[关于 KV cache 的笔记](/notes/kv-cache-arithmetic/)。《深入底层》计划写一章讲 GPU。
+- **本站**：[张量那一章](/zh/writing/tensors-memory-shapes-and-strides/)里讲内存布局的一节，[《Transformer 块的内部》](/zh/writing/inside-the-transformer-block/)里的 FLOP 计数，以及[关于 KV cache 的笔记](/zh/notes/kv-cache-arithmetic/)。《深入底层》计划写一章讲 GPU。
 - **其他地方**：Edward Yang 的 [PyTorch internals](http://blog.ezyang.com/2019/05/pytorch-internals/)，讲一个张量操作如何一路抵达它的内核。Karpathy 的 [llm.c](https://github.com/karpathy/llm.c) 用纯 C 和 CUDA 训练 GPT-2，其中 CPU 参考实现只有一个文件，大约一千行。[tinygrad](https://github.com/tinygrad/tinygrad) 用它自己的话说，是“介于 PyTorch 和 karpathy/micrograd 之间的东西”：一个能用的框架，比 PyTorch 小得多。
 - **检查点**：在运行之前估算一步训练的内存和计算量，然后实际测量。
 
@@ -106,7 +106,7 @@ tags: [guide, learning, deep-learning]
 
 ## 用 Claude Code 和 Codex 学习
 
-这一节是建议，依据的是通常行之有效的做法。AI 编程智能体既能让这条路线快得多，也可能悄悄把它掏空。区别在于你把什么交给它们。和智能体协作的一般习惯，见[这份实战指南](/writing/working-with-a-coding-agent/)。专就学习而言：
+这一节是建议，依据的是通常行之有效的做法。AI 编程智能体既能让这条路线快得多，也可能悄悄把它掏空。区别在于你把什么交给它们。和智能体协作的一般习惯，见[这份实战指南](/zh/writing/working-with-a-coding-agent/)。专就学习而言：
 
 - **核心自己写，脚手架交出去**：让智能体去写数据加载、绘图和测试框架，前向和反向传播则自己动手敲。把它们交出去，你省掉的那份理解，恰恰是你来这里要得到的东西。
 - **要参照，不要答案**：“写一个测试，在随机输入上把我的 softmax 和 NumPy 的结果相比较，包括非常大的 logits。”智能体擅长写测试框架，而一个失败的测试比一个能用的解答教给你的更多。
