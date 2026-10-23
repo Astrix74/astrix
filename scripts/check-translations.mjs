@@ -52,6 +52,13 @@ function parse(file) {
     if (callout) found.callouts.push(callout[1].toUpperCase());
     if (/^\|.*\|\s*$/.test(line)) found.tableRows++;
   }
+  // Chinese counts large numbers in 万 (10^4) and 亿 (10^8), so 70 million is 7000 万 and 1.3 billion is 13 亿.
+  // Trillion maps directly to 万亿 and keeps its number.
+  const scales = { million: 100, billion: 10 };
+  rest = rest.replace(/(\d+(?:\.\d+)?)[ -](million|billion)\b/g, (_, n, scale) => ` ${Number((n * scales[scale]).toPrecision(12))} `);
+  // Month names count as their numbers, since a translation writes "October 2026" as 2026 年 10 月.
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  rest = rest.replace(new RegExp(`\\b(${months.join('|')})\\b`, 'g'), (month) => ` ${months.indexOf(month) + 1} `);
   found.digits = rest.match(/\d+(?:\.\d+)?/g) ?? [];
   return found;
 }
@@ -110,7 +117,7 @@ if (dist) {
       const text = readFileSync(file, 'utf8')
         .replace(/<(pre|code|script|style)\b[\s\S]*?<\/\1>/g, '')
         .replace(/<annotation\b[\s\S]*?<\/annotation>/g, '');
-      const stray = text.match(/[^\s<>]{0,12}(\*\*|__)[^\s<>]{0,12}/g);
+      const stray = text.match(/[^\s<>]{0,12}(\*\*|__|[\u3000-\u303f\u4e00-\u9fff\uff00-\uffef]\*|\*[\u3000-\u303f\u4e00-\u9fff\uff00-\uffef])[^\s<>]{0,12}/g);
       if (stray) problems.push(`${relative(dist, file)}: emphasis that did not render: ${JSON.stringify(stray.slice(0, 3))}`);
     }
   }
