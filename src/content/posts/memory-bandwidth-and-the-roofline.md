@@ -80,7 +80,7 @@ def best_time(fn, repeats=15):
     return best
 
 rng = np.random.default_rng(0)
-x, y = rng.normal(size=(2, 2**25)).astype(np.float32)  # 128 MB each, far larger than the caches
+x, y = rng.normal(size=(2, 2**25)).astype(np.float32)  # 134 MB each, far larger than the caches
 out = np.empty_like(x)
 cpu_bandwidth = 2 * x.nbytes / best_time(lambda: np.copyto(out, x))
 mats = {k: rng.normal(size=(k, k)).astype(np.float32) for k in [32, 128, 512, 2048]}
@@ -100,7 +100,7 @@ for name, flops, nbytes, t in cases:
 
 Across several runs, the copy measured 62 to 88 GB/s and the best matrix multiplication 1.4 to 2.2 TFLOP/s: a ridge point of 20 to 28 FLOPs per byte, an order of magnitude below the H100's. The roofline is an upper bound, and each operation falls short of it in its own way:
 
-- **The add** ran at 4 to 6 GFLOP/s, 75 to 90% of its bandwidth limit. It is a memory-bound operation running at the speed of memory, around 300 times fewer FLOPs per second than a large matrix multiplication on the same chip.
+- **The add** ran at 4 to 6 GFLOP/s, 75 to 90% of its bandwidth limit. It is a memory-bound operation running at the speed of memory, a few hundred times fewer FLOPs per second than a large matrix multiplication on the same chip.
 - **The big matrix multiplications** run at or near the compute roof, as their intensity says they should. The fastest of them defines the roof.
 - **The matrix-vector product** reached only a third to a half of its bandwidth limit. The library's single-vector code path doesn't saturate memory the way a plain copy does. A roofline says what is possible, not what a given implementation achieves.
 - **The 32 × 32 matrix multiplication** ran at a tenth of its limit or less. It takes microseconds, and most of that is the cost of calling into the library at all. Horace He's essay on GPU performance names this third regime **overhead**: "Everything else", meaning time spent neither computing nor moving tensors. On a GPU, launching a kernel has a similar fixed cost.
@@ -142,7 +142,7 @@ for batch in [1, 8, 64]:
           f"batched {together / batch * 1e6:6.0f} us per token")
 ```
 
-Across several runs, processing tokens one at a time cost 2.1 to 2.5 milliseconds each, at every batch size, because each token rereads the whole 64 MB matrix. Batched, the matrix is read once per step: with 8 tokens each one cost 0.30 to 0.34 milliseconds, about seven times less, and with 64 tokens 44 to 47 microseconds, about fifty times less. This is why inference servers batch requests from different users together, and why the cost per token falls so steeply with load.
+Across several runs, processing tokens one at a time cost 2.1 to 2.5 milliseconds each, at every batch size, because each token rereads the whole 67 MB matrix. Batched, the matrix is read once per step: with 8 tokens each one cost 0.30 to 0.34 milliseconds, about seven times less, and with 64 tokens 44 to 47 microseconds, about fifty times less. This is why inference servers batch requests from different users together, and why the cost per token falls so steeply with load.
 
 ## Fusion: moving fewer bytes
 
