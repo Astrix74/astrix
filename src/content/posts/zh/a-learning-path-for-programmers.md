@@ -56,7 +56,7 @@ tags: [guide, learning, deep-learning]
 
 语言模型背后的架构，一块一块来。
 
-- **本站**：[《从第一性原理理解 Transformer》](/zh/series/transformers/)的第 1 到第 3 章，以及论文[《注意力何时冻结》](/papers/when-attention-freezes/)。
+- **本站**：[《从第一性原理理解 Transformer》](/zh/series/transformers/)的第 1 到第 3 章，以及论文[《注意力何时冻结》](/zh/papers/when-attention-freezes/)。
 - **其他地方**：先看 3Blue1Brown 的[神经网络系列课](https://www.3blue1brown.com/topics/neural-networks)，包括“Attention in transformers, step-by-step”，建立直观印象。然后是 Karpathy 的“Let's build GPT”，以及 [The Annotated Transformer](https://nlp.seas.harvard.edu/annotated-transformer/)，它逐行实现了原始论文。
 - **检查点**：实现带因果掩码的多头注意力，并测试改动未来的 token 永远不会改变过去位置的输出。
 

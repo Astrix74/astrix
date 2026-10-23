@@ -36,4 +36,4 @@ T=10.0  probabilities [0.366 0.331 0.303]
 
 温度越低，生成的文本越可预测、越容易重复；温度越高，文本越多样，也越容易出错。温度从不改变 token 之间的排名先后，它改变的只是模型对排在前面的那几个 token 偏爱得有多鲜明。
 
-训练中也有同一个旋钮。[知识蒸馏](https://arxiv.org/abs/1503.02531)（Hinton、Vinyals 和 Dean，2015）会调高大模型 softmax 的温度，让那些很小的概率变得足够大，好让一个更小的模型从中学习；这些小概率透露的是，哪些错误答案其实几乎是对的。注意力里的 $1/\sqrt{d_k}$ 实际上也是一个固定的温度，选它是为了防止 softmax 饱和，详见[《注意力：一次可微分的查找》](/zh/writing/attention-as-a-differentiable-lookup/)。当注意力同时面对许多键（key）时，温度决定了它是分散开来，还是冻结在少数几个键上，这正是论文[《注意力何时冻结》](/papers/when-attention-freezes/)的主题。
+训练中也有同一个旋钮。[知识蒸馏](https://arxiv.org/abs/1503.02531)（Hinton、Vinyals 和 Dean，2015）会调高大模型 softmax 的温度，让那些很小的概率变得足够大，好让一个更小的模型从中学习；这些小概率透露的是，哪些错误答案其实几乎是对的。注意力里的 $1/\sqrt{d_k}$ 实际上也是一个固定的温度，选它是为了防止 softmax 饱和，详见[《注意力：一次可微分的查找》](/zh/writing/attention-as-a-differentiable-lookup/)。当注意力同时面对许多键（key）时，温度决定了它是分散开来，还是冻结在少数几个键上，这正是论文[《注意力何时冻结》](/zh/papers/when-attention-freezes/)的主题。
