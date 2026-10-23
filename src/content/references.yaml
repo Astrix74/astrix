@@ -427,3 +427,29 @@
   year: 2019
   venue: "ezyang's blog"
   url: http://blog.ezyang.com/2019/05/pytorch-internals/
+
+- id: goldberg1991
+  title: "What Every Computer Scientist Should Know About Floating-Point Arithmetic"
+  authors: "David Goldberg"
+  year: 1991
+  venue: "ACM Computing Surveys"
+  url: https://doi.org/10.1145/103162.103163
+
+- id: micikevicius2017
+  title: "Mixed Precision Training"
+  authors: "Paulius Micikevicius, Sharan Narang, Jonah Alben, et al."
+  year: 2017
+  venue: "ICLR 2018"
+  url: https://arxiv.org/abs/1710.03740
+
+- id: kalamkar2019
+  title: "A Study of BFLOAT16 for Deep Learning Training"
+  authors: "Dhiraj Kalamkar, Dheevatsa Mudigere, Naveen Mellempudi, et al."
+  year: 2019
+  url: https://arxiv.org/abs/1905.12322
+
+- id: micikevicius2022
+  title: "FP8 Formats for Deep Learning"
+  authors: "Paulius Micikevicius, Dusan Stosic, Neil Burgess, et al."
+  year: 2022
+  url: https://arxiv.org/abs/2209.05433

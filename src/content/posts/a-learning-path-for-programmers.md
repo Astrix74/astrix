@@ -48,7 +48,7 @@ The core of everything: a loss to minimize, gradients from the chain rule, and a
 
 Why deep networks are hard to train, and the fixes everyone uses: initialization, normalization, residual connections and better optimizers.
 
-- **On this site:** [Making depth trainable](/writing/making-depth-trainable/), and the notes on [Adam and AdamW](/notes/adam-and-adamw/) and [LayerNorm vs RMSNorm](/notes/layernorm-vs-rmsnorm/).
+- **On this site:** [Making depth trainable](/writing/making-depth-trainable/), the notes on [Adam and AdamW](/notes/adam-and-adamw/) and [LayerNorm vs RMSNorm](/notes/layernorm-vs-rmsnorm/), and [Numerics](/writing/floating-point-and-mixed-precision/) for what changes when training runs in 16-bit numbers.
 - **Elsewhere:** the makemore lectures in Zero to Hero, especially "Activations & Gradients, BatchNorm" and "Becoming a Backprop Ninja", which has you write the backward pass of a whole network by hand. Part 2 of fast.ai's [Practical Deep Learning for Coders](https://course.fast.ai/) implements Stable Diffusion from scratch, and along the way builds its own training framework, with lessons on initialization, normalization and mixed precision.
 - **Checkpoint:** given a network that won't train, work out whether the cause is initialization, the learning rate or a bug, and show the evidence.
 

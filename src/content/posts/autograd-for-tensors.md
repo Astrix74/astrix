@@ -161,7 +161,7 @@ cross-entropy                worst relative error 4.5e-10
 two-layer network            worst relative error 5.4e-07
 ```
 
-Relative errors around $10^{-10}$ mean the analytic and numerical gradients agree to the precision finite differences allow. The two-layer network is slightly worse because ReLU has kinks, where finite differences straddle a corner. A relative error near $10^{-2}$ or larger would mean a real bug. PyTorch ships the same tool as `torch.autograd.gradcheck`. If you write a custom operation, run it.
+Relative errors around $10^{-10}$ mean the analytic and numerical gradients agree to the precision finite differences allow. The two-layer network's error is about a thousand times larger, though still far from alarming, because ReLU has kinks, where finite differences straddle a corner. A relative error near $10^{-2}$ or larger would mean a real bug. PyTorch ships the same tool as `torch.autograd.gradcheck`. If you write a custom operation, run it.
 
 ## Train a network with it
 
@@ -242,4 +242,4 @@ Andrej Karpathy's [micrograd](https://github.com/karpathy/micrograd) is the clas
 > - Gradient-check every backward rule on random inputs. Wrong gradients don't crash.
 > - Frameworks add gradient accumulation, memory management, in-place safety, device kernels and higher derivatives on top of the same core.
 
-The chapters planned next build on this engine, starting with the numerics of training: floating-point formats, where they overflow, and how mixed precision works.
+The [next chapter](/writing/floating-point-and-mixed-precision/) turns to the numbers inside these arrays: floating-point formats, where they overflow, and how mixed precision works.

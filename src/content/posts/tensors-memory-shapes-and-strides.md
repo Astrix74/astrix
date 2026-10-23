@@ -116,7 +116,7 @@ rows reversed     shape (2, 3, 4)  strides (12, -4, 1)  numpy (12, -4, 1)  200 r
 broadcast row     shape (3, 4)     strides (0, 1)       numpy (0, 1)       200 random elements match: True
 ```
 
-All five cases match NumPy exactly, and each one is a single rule:
+All five cases match NumPy exactly. Apart from the contiguous starting point, each one is a single rule:
 
 - **Transpose** reverses the shape and the strides. The data doesn't move.
 - **Slicing with a step** moves the offset to the first element and multiplies the stride by the step.
@@ -214,7 +214,7 @@ stride (bytes)   useful bytes per 64-byte line   lines fetched per 1,024 element
           4096                               4                               1024
 ```
 
-At a 4-byte stride every byte of every line is used. At 64 bytes or more, each element costs a whole line and 60 of its 64 bytes are wasted. The table is a model: real processors prefetch, and when data fits in cache, lines get reused. But you can measure the effect. This sums a million floats that are contiguous, then spread out:
+At a 4-byte stride every byte of every line is used. At 64 bytes or more, each element costs a whole line and 60 of its 64 bytes are wasted. The table is a model: real processors prefetch, and when data fits in cache, lines get reused. But you can measure the effect. This sums floats that are contiguous, then spread out: a million of them at the first two strides, and at the widest the 65,536 that the array holds at that spacing:
 
 ```python
 import time

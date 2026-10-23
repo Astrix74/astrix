@@ -4,7 +4,6 @@ description: Build the machinery of deep learning yourself, from tensors and aut
 order: 2
 prerequisites: [deep-learning-foundations]
 planned:
-  - "Numerics: floating point, overflow and mixed precision"
   - "GPUs: why memory bandwidth decides speed"
   - A small language model, end to end
 ---
