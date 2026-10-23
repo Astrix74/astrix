@@ -242,4 +242,4 @@ Andrej Karpathy 的 [micrograd](https://github.com/karpathy/micrograd) 是这个
 > - 在随机输入上对每条反向规则做梯度检验。错误的梯度不会让程序崩溃。
 > - 框架在同一个核心之上，加了梯度累加、内存管理、原地操作的安全保护、设备 kernel 和高阶导数。
 
-[下一章](/writing/floating-point-and-mixed-precision/)转向这些数组里的数本身：浮点格式、它们会在哪里溢出，以及混合精度是怎么工作的。
+[下一章](/zh/writing/floating-point-and-mixed-precision/)转向这些数组里的数本身：浮点格式、它们会在哪里溢出，以及混合精度是怎么工作的。

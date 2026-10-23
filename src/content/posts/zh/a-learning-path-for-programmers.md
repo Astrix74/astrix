@@ -48,7 +48,7 @@ tags: [guide, learning, deep-learning]
 
 深层网络为什么难训练，以及大家都在用的那些解决办法：初始化、归一化、残差连接和更好的优化器。
 
-- **本站**：[《让深度可训练》](/zh/writing/making-depth-trainable/)，关于 [Adam 与 AdamW](/notes/adam-and-adamw/) 和 [LayerNorm 与 RMSNorm](/notes/layernorm-vs-rmsnorm/) 的笔记，以及讲训练改用 16 位数字后会发生什么的[《数值》](/writing/floating-point-and-mixed-precision/)。
+- **本站**：[《让深度可训练》](/zh/writing/making-depth-trainable/)，关于 [Adam 与 AdamW](/notes/adam-and-adamw/) 和 [LayerNorm 与 RMSNorm](/notes/layernorm-vs-rmsnorm/) 的笔记，以及讲训练改用 16 位数字后会发生什么的[《数值》](/zh/writing/floating-point-and-mixed-precision/)。
 - **其他地方**：Zero to Hero 里的 makemore 系列讲座，尤其是“Activations & Gradients, BatchNorm”和“Becoming a Backprop Ninja”，后者让你亲手写出整个网络的反向传播。fast.ai 的 [Practical Deep Learning for Coders](https://course.fast.ai/) 第 2 部分从零实现 Stable Diffusion，一路上还搭起了自己的训练框架，其中有专门讲初始化、归一化和混合精度的课。
 - **检查点**：给你一个训练不起来的网络，判断原因是初始化、学习率还是 bug，并拿出证据。
 
