@@ -30,7 +30,7 @@ tags: [guide, learning, deep-learning]
 1. **搭建**：亲手实现这一部分，代码短到坐下来一次就能读完。在 GPU 登场之前，Python 和 NumPy 就够用了。
 2. **用参照（oracle）检验**：在随机输入上，把你的输出和一个可信的实现相比较：NumPy、PyTorch，或者用有限差分来检验梯度。正是这一步把“能跑”变成“是对的”。
 3. **故意把它弄坏**：删掉一行、翻转一个符号，或者改一个超参数，但动手之前先预测会出现什么症状。看着少了某个部分之后哪里出错，你就明白了这个部分是做什么用的。
-4. **和真东西对照**：读一读生产级的库是怎么做同一件事的，列出它多做了哪些：内存管理、内核（kernel）、各种边界情况。
+4. **和真东西对照**：读一读生产级的库是怎么做同一件事的，列出它多做了哪些：内存管理、kernel、各种边界情况。
 
 光靠读和看，只能培养出熟悉感。熟悉感摸起来像理解，可一面对空白的编辑器就站不住了。把它变成知识的，是动手搭建和检验。
 
@@ -68,12 +68,12 @@ tags: [guide, learning, deep-learning]
 - **其他地方**：Karpathy 的“Let's build the GPT Tokenizer”。然后是 [nanochat](https://github.com/karpathy/nanochat)，他目前的最小化代码库，涵盖“分词、预训练、微调、评估和推理”。它的前身 [nanoGPT](https://github.com/karpathy/nanoGPT) 如今自称“非常老旧，已被弃用”，但其中各约 300 行的模型文件和训练文件仍然清晰易读。Sebastian Raschka 的书《Build a Large Language Model (From Scratch)》（Manning 出版）一步步搭出一个 GPT，书中的全部代码都免费放在[一个公开仓库](https://github.com/rasbt/LLMs-from-scratch)里。
 - **检查点**：用你自选的一段文本训练一个小型 Transformer，从中采样，并解释它的损失曲线。
 
-### 第 5 阶段：内存、GPU 与内核
+### 第 5 阶段：内存、GPU 与 kernel
 
 时间和内存究竟花在了哪里，以及为什么同样的数学既可以跑得快，也可以跑得慢。
 
-- **本站**：[张量那一章](/zh/writing/tensors-memory-shapes-and-strides/)里讲内存布局的一节，[《Transformer 块的内部》](/zh/writing/inside-the-transformer-block/)里的 FLOP 计数，[关于 KV cache 的笔记](/zh/notes/kv-cache-arithmetic/)，以及[《GPU：为什么内存带宽决定速度》](/writing/memory-bandwidth-and-the-roofline/)。
-- **其他地方**：Edward Yang 的 [PyTorch internals](http://blog.ezyang.com/2019/05/pytorch-internals/)，讲一个张量操作如何一路抵达它的内核。Karpathy 的 [llm.c](https://github.com/karpathy/llm.c) 用纯 C 和 CUDA 训练 GPT-2，其中 CPU 参考实现只有一个文件，大约一千行。[tinygrad](https://github.com/tinygrad/tinygrad) 用它自己的话说，是“介于 PyTorch 和 karpathy/micrograd 之间的东西”：一个能用的框架，比 PyTorch 小得多。
+- **本站**：[张量那一章](/zh/writing/tensors-memory-shapes-and-strides/)里讲内存布局的一节，[《Transformer 块的内部》](/zh/writing/inside-the-transformer-block/)里的 FLOP 计数，[关于 KV cache 的笔记](/zh/notes/kv-cache-arithmetic/)，以及[《GPU：为什么内存带宽决定速度》](/zh/writing/memory-bandwidth-and-the-roofline/)。
+- **其他地方**：Edward Yang 的 [PyTorch internals](http://blog.ezyang.com/2019/05/pytorch-internals/)，讲一个张量操作如何一路抵达它的 kernel。Karpathy 的 [llm.c](https://github.com/karpathy/llm.c) 用纯 C 和 CUDA 训练 GPT-2，其中 CPU 参考实现只有一个文件，大约一千行。[tinygrad](https://github.com/tinygrad/tinygrad) 用它自己的话说，是“介于 PyTorch 和 karpathy/micrograd 之间的东西”：一个能用的框架，比 PyTorch 小得多。
 - **检查点**：在运行之前估算一步训练的内存和计算量，然后实际测量。
 
 ### 第 6 阶段：阅读研究
@@ -89,7 +89,7 @@ tags: [guide, learning, deep-learning]
 
 有两门课单独就能覆盖这条路线的大部分内容，而且都是免费的。
 
-**[Stanford CS336: Language Modeling from Scratch](https://stanford-cs336.github.io/)** 由 Tatsunori Hashimoto 和 Percy Liang 讲授，自称是“一门非常注重实现的课”。第一次作业里，你要实现一个 Transformer 语言模型的“各个组件（分词器、模型架构、优化器）”，并训练出一个模型。第二次作业里，你要对它做性能剖析，并用 Triton 写出你自己的 FlashAttention 2 内核。课程录像是公开的。
+**[Stanford CS336: Language Modeling from Scratch](https://stanford-cs336.github.io/)** 由 Tatsunori Hashimoto 和 Percy Liang 讲授，自称是“一门非常注重实现的课”。第一次作业里，你要实现一个 Transformer 语言模型的“各个组件（分词器、模型架构、优化器）”，并训练出一个模型。第二次作业里，你要对它做性能剖析，并用 Triton 写出你自己的 FlashAttention 2 kernel。课程录像是公开的。
 
 **Neural Networks: Zero to Hero** 是更平缓的起点：“从零开始，用代码构建神经网络”，从 micrograd 一直讲到 GPT 和它的分词器。
 
