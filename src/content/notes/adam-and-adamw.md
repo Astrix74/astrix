@@ -35,14 +35,14 @@ def run(decoupled, grad_scale, steps=2000, lr=1e-3, wd=0.1, b1=0.9, b2=0.999, ep
     theta, m, v = 1.0, 0.0, 0.0
     for t in range(1, steps + 1):
         g = grad_scale * rng.normal()    # pure noise: the loss ignores theta
-        if not decoupled:
+        if decoupled:
+            theta -= lr * wd * theta     # AdamW: decay applied to the weight itself
+        else:
             g += wd * theta              # Adam + L2: decay inside the gradient
         m = b1 * m + (1 - b1) * g
         v = b2 * v + (1 - b2) * g * g
         m_hat, v_hat = m / (1 - b1 ** t), v / (1 - b2 ** t)
         theta -= lr * m_hat / (np.sqrt(v_hat) + eps)
-        if decoupled:
-            theta -= lr * wd * theta     # AdamW: decay applied to the weight
     return theta
 
 for name, decoupled in [("Adam + L2", False), ("AdamW    ", True)]:
