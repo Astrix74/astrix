@@ -1,0 +1,63 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Byline from '../components/Byline.astro';
+import ProseScripts from '../components/ProseScripts.astro';
+import ReferenceList from '../components/ReferenceList.astro';
+import TranslationNotice from '../components/TranslationNotice.astro';
+import { site } from '../config/site';
+import { defaultLocale, localize, slugOf, type Alternates, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import type { Note } from '../lib/notes';
+import { formatDate } from '../lib/posts';
+import { referencesOf } from '../lib/references';
+
+interface Props {
+  note: Note;
+  locale: Locale;
+  alternates: Alternates;
+}
+
+const { note, locale, alternates } = Astro.props;
+const t = strings[locale];
+const { Content } = await render(note);
+const references = await referencesOf(note);
+---
+
+<BaseLayout
+  locale={locale}
+  alternates={alternates}
+  title={note.data.title}
+  description={t.notes.noteDescription(formatDate(note.data.date))}
+  type="article"
+>
+  <link slot="head" rel="alternate" type="application/rss+xml" title={t.notes.feedTitle(site.title)} href={localize(locale, '/notes/rss.xml')} />
+  <article>
+    <a class="back" href={localize(locale, '/notes/')}>{t.notes.back}</a>
+    <h1 class="post-title">{note.data.title}</h1>
+    <p class="post-meta">
+      <time datetime={note.data.date.toISOString()}>{formatDate(note.data.date)}</time>
+      {note.data.draft && ` · ${t.draft}`}
+    </p>
+    <Byline locale={locale} writtenBy={note.data.writtenBy} />
+    <TranslationNotice
+      locale={locale}
+      originalHref={localize(defaultLocale, `/notes/${slugOf(note.id)}/`)}
+      hasFigures={/!\[/.test(note.body ?? '')}
+    />
+    <div class="prose">
+      <Content />
+    </div>
+    {
+      references.length > 0 && (
+        <section class="more-posts" aria-labelledby="note-references">
+          <h2 class="label" id="note-references">
+            {t.post.references}
+          </h2>
+          <ReferenceList references={references} locale={locale} />
+        </section>
+      )
+    }
+  </article>
+  <ProseScripts />
+</BaseLayout>

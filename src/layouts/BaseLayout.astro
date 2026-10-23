@@ -4,8 +4,14 @@ import '../styles/global.css';
 import { site } from '../config/site';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { defaultLocale, everyLocale, languageTag, localize, ogLocale, type Alternates, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import { checkContent } from '../lib/check';
 
 interface Props {
+  locale?: Locale;
+  /** This page's address in each language that has it. Defaults to the current path in every language. */
+  alternates?: Alternates;
   title?: string;
   description?: string;
   type?: 'website' | 'article';
@@ -17,9 +23,15 @@ interface Props {
   jsonLd?: Record<string, unknown>;
 }
 
+await checkContent();
+
+const { locale = defaultLocale } = Astro.props;
+const t = strings[locale];
 const {
   title,
-  description = site.description,
+  description = t.siteDescription,
+  // Index pages exist in every language, at the same path under each prefix.
+  alternates = everyLocale(locale === defaultLocale ? Astro.url.pathname : Astro.url.pathname.slice(locale.length + 1)),
   type = 'website',
   canonical: canonicalOverride,
   image = '/og/default.png',
@@ -31,7 +43,7 @@ const imageUrl = new URL(image, Astro.site).href;
 ---
 
 <!doctype html>
-<html lang={site.lang}>
+<html lang={languageTag[locale]}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,10 +53,24 @@ const imageUrl = new URL(image, Astro.site).href;
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="alternate" type="application/rss+xml" title={site.title} href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={site.title} href={localize(locale, '/rss.xml')} />
+    {
+      // Language alternates, only for pages published in more than one language.
+      Object.keys(alternates).length > 1 && (
+        <>
+          {Object.entries(alternates).map(([other, href]) => (
+            <link rel="alternate" hreflang={languageTag[other as Locale]} href={new URL(href, Astro.site).href} />
+          ))}
+          {alternates[defaultLocale] && (
+            <link rel="alternate" hreflang="x-default" href={new URL(alternates[defaultLocale], Astro.site).href} />
+          )}
+        </>
+      )
+    }
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta property="og:site_name" content={site.title} />
     <meta property="og:type" content={type} />
+    <meta property="og:locale" content={ogLocale[locale]} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -66,13 +92,13 @@ const imageUrl = new URL(image, Astro.site).href;
     }
   </head>
   <body>
-    <a class="skip" href="#main">Skip to content</a>
+    <a class="skip" href="#main">{t.skipToContent}</a>
     <div class="wrap">
-      <Header />
+      <Header locale={locale} alternates={alternates} />
       <main id="main">
         <slot />
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </div>
   </body>
 </html>

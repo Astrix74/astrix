@@ -16,4 +16,4 @@ It starts with what "learning" means as an optimization problem, works through b
 
 **How to read it.** In order. Each chapter has a short NumPy program you can run and change; the fastest way to understand a formula is to break the code that implements it.
 
-When you finish, you should be able to derive the gradient of a small network by hand, write a working autograd engine, and explain why a 100-layer network needs more than a good learning rate. The next series, *Transformers from first principles*, builds on all three.
+When you finish, you should be able to derive the gradient of a small network by hand, write a working autograd engine, and explain why a 100-layer network needs more than a good learning rate. Both series that follow build on this: *Under the hood* implements the same machinery yourself, and *Transformers from first principles* builds on all three.

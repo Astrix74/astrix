@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SeriesList from '../components/SeriesList.astro';
+import { localize, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import { getCitedReferences } from '../lib/references';
+import { getSeries } from '../lib/series';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = strings[locale];
+const items = await getSeries(locale);
+const hasReading = (await getCitedReferences(locale)).length > 0;
+---
+
+<BaseLayout locale={locale} title={t.series.title} description={t.series.description}>
+  <h1 class="page-title">{t.series.title}</h1>
+  <p class="page-intro">{t.series.intro}</p>
+  {items.length > 0 ? <SeriesList items={items} locale={locale} /> : <p class="empty">{t.nothingPublished}</p>}
+  {hasReading && <a class="more" href={localize(locale, '/reading/')}>{t.series.readingBehind}</a>}
+</BaseLayout>

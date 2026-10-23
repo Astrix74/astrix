@@ -3,12 +3,17 @@
 ---
 
 <script>
+  const zh = document.documentElement.lang.startsWith('zh');
+  const text = zh
+    ? { section: '链接到本节：', copy: '复制', copied: '已复制', failed: '复制失败', copyLabel: '复制这段代码' }
+    : { section: 'Link to this section: ', copy: 'copy', copied: 'copied', failed: 'failed', copyLabel: 'Copy this code to the clipboard' };
+
   for (const heading of document.querySelectorAll<HTMLHeadingElement>('.prose :is(h2, h3)[id]:not(.sr-only)')) {
     const link = document.createElement('a');
     link.className = 'anchor';
     link.href = `#${heading.id}`;
     link.textContent = '#';
-    link.setAttribute('aria-label', `Link to this section: ${heading.textContent}`);
+    link.setAttribute('aria-label', `${text.section}${heading.textContent}`);
     heading.append(link);
   }
 
@@ -23,16 +28,16 @@
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'copy';
-    button.textContent = 'copy';
-    button.setAttribute('aria-label', 'Copy this code to the clipboard');
+    button.textContent = text.copy;
+    button.setAttribute('aria-label', text.copyLabel);
     button.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(code.innerText);
-        button.textContent = 'copied';
+        button.textContent = text.copied;
       } catch {
-        button.textContent = 'failed';
+        button.textContent = text.failed;
       }
-      setTimeout(() => (button.textContent = 'copy'), 1500);
+      setTimeout(() => (button.textContent = text.copy), 1500);
     });
 
     wrapper.append(pre, button);

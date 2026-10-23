@@ -1,22 +1,31 @@
 ---
 import { getCollection } from 'astro:content';
 import { site, socials } from '../config/site';
+import { inLocale, localize, slugOf, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
 import { getCitedReferences } from '../lib/references';
 
-const pages = await getCollection('pages', ({ data }) => data.footer);
-const hasReading = (await getCitedReferences()).length > 0;
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = strings[locale];
+const pages = inLocale(await getCollection('pages', ({ data }) => data.footer), locale);
+const hasReading = (await getCitedReferences(locale)).length > 0;
 const links = [
-  ...(hasReading ? [{ label: 'Reading list', href: '/reading/' }] : []),
+  ...(hasReading ? [{ label: t.footer.readingList, href: localize(locale, '/reading/') }] : []),
   ...pages
     .sort((a, b) => a.data.title.localeCompare(b.data.title))
-    .map((page) => ({ label: page.data.title, href: `/${page.id}/` })),
-  ...socials,
+    .map((page) => ({ label: page.data.title, href: localize(locale, `/${slugOf(page.id)}/`) })),
+  // Links to this site, such as the RSS feed, go to the same language.
+  ...socials.map((social) => ({ ...social, href: social.href.startsWith('/') ? localize(locale, social.href) : social.href })),
 ];
 ---
 
 <footer class="site-footer">
   <span>© {new Date().getFullYear()} {site.author}</span>
-  <nav aria-label="More">
+  <nav aria-label={t.moreLabel}>
     {links.map((link) => <a href={link.href}>{link.label}</a>)}
   </nav>
 </footer>

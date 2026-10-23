@@ -11,6 +11,17 @@
   --mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 }
 
+/* Chinese pages keep the Latin fonts for Latin text; Chinese characters then fall through to a Song (serif)
+   face rather than the browser's default sans. Chinese has no italic, so slanted styles are dropped there. */
+:root:lang(zh) {
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, 'Songti SC', 'Noto Serif CJK SC',
+    'Source Han Serif SC', 'Noto Serif SC', SimSun, serif;
+}
+
+:lang(zh) :is(em, i, blockquote) {
+  font-style: normal;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #171614;

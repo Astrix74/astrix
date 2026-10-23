@@ -1,3 +1,4 @@
+import { localize, type Locale } from '../i18n';
 import type { Post } from './posts';
 
 export function slugifyTag(tag: string): string {
@@ -8,8 +9,8 @@ export function slugifyTag(tag: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-export function tagUrl(tag: string): string {
-  return `/writing/tags/${slugifyTag(tag)}/`;
+export function tagUrl(locale: Locale, tag: string): string {
+  return localize(locale, `/writing/tags/${slugifyTag(tag)}/`);
 }
 
 export interface TagCount {

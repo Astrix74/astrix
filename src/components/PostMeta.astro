@@ -1,4 +1,6 @@
 ---
+import { localeOf } from '../i18n';
+import { strings } from '../i18n/strings';
 import { formatDate, readingMinutes, type Post } from '../lib/posts';
 import { tagUrl } from '../lib/tags';
 
@@ -14,14 +16,16 @@ interface Item {
 
 const { post } = Astro.props;
 const { date, updated, tags, draft } = post.data;
+const locale = localeOf(post.id);
+const t = strings[locale];
 
 const items: Item[] = [{ text: formatDate(date), datetime: date.toISOString() }];
 if (updated && formatDate(updated) !== formatDate(date)) {
-  items.push({ text: `updated ${formatDate(updated)}`, datetime: updated.toISOString() });
+  items.push({ text: t.updatedOn(formatDate(updated)), datetime: updated.toISOString() });
 }
-items.push({ text: `${readingMinutes(post.body)} min read` });
-for (const tag of tags) items.push({ text: tag, href: tagUrl(tag) });
-if (draft) items.push({ text: 'draft' });
+items.push({ text: t.minRead(readingMinutes(post.body)) });
+for (const tag of tags) items.push({ text: tag, href: tagUrl(locale, tag) });
+if (draft) items.push({ text: t.draft });
 ---
 
 <p class="post-meta">

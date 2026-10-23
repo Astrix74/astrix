@@ -1,18 +1,23 @@
 ---
 import { site } from '../config/site';
+import { localize, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
 
 interface Props {
+  locale: Locale;
   /** Overrides the site-wide writer for this entry. An empty string hides the line. */
   writtenBy?: string;
 }
 
-const writtenBy = Astro.props.writtenBy ?? site.writtenBy;
+const { locale } = Astro.props;
+const t = strings[locale];
+const who = Astro.props.writtenBy ?? site.writtenBy[locale];
 ---
 
 {
-  writtenBy && (
+  who && (
     <p class="byline">
-      Written by {writtenBy} · <a href="/about/#how-this-site-is-written">how this site works</a>
+      {t.byline.writtenBy(who)} · <a href={localize(locale, '/about/') + t.byline.aboutAnchor}>{t.byline.howItWorks}</a>
     </p>
   )
 }

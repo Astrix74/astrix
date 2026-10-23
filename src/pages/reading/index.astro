@@ -1,23 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import ReferenceList from '../../components/ReferenceList.astro';
-import { getCitedReferences } from '../../lib/references';
-
-const cited = await getCitedReferences();
-const citedBy = new Map(cited.map(({ reference, citedBy }) => [reference.id, citedBy]));
+import Reading from '../../views/Reading.astro';
 ---
 
-<BaseLayout title="Reading list" description="Every paper and article cited on this site, oldest first.">
-  <h1 class="page-title">Reading list</h1>
-  <p class="page-intro">
-    Every paper and article cited here, oldest first, so the list also reads as a short history of the field. Each one
-    links to the pieces that work through it.
-  </p>
-  {
-    cited.length > 0 ? (
-      <ReferenceList references={cited.map(({ reference }) => reference)} citedBy={citedBy} />
-    ) : (
-      <p class="empty">Nothing here yet.</p>
-    )
-  }
-</BaseLayout>
+<Reading locale="en" />

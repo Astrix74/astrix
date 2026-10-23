@@ -1,13 +1,17 @@
 ---
-import { entryHref, type CitingEntry, type Reference } from '../lib/references';
+import type { Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import { entryHref } from '../lib/links';
+import type { CitingEntry, Reference } from '../lib/references';
 
 interface Props {
   references: Reference[];
+  locale: Locale;
   /** Entries that cite each reference, by reference id. Adds a line linking to them. */
   citedBy?: Map<string, CitingEntry[]>;
 }
 
-const { references, citedBy } = Astro.props;
+const { references, locale, citedBy } = Astro.props;
 ---
 
 <ol class="reference-list">
@@ -24,7 +28,7 @@ const { references, citedBy } = Astro.props;
             <span class="reference-meta">{[reference.data.authors, reference.data.venue].filter(Boolean).join(' · ')}</span>
             {entries.length > 0 && (
               <span class="reference-cited">
-                {'Discussed in '}
+                {strings[locale].reading.discussedIn}
                 {entries.map((entry, i) => (
                   <>
                     {i > 0 && ', '}

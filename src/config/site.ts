@@ -1,7 +1,12 @@
 // Everything you are likely to change on the site lives in this file.
+// Interface text in every language lives in src/i18n/strings.ts.
+import type { Locale } from '../i18n';
+import type { Strings } from '../i18n/strings';
 
 export interface NavItem {
-  label: string;
+  /** The menu label's key in src/i18n/strings.ts. */
+  key: keyof Strings['nav'];
+  /** The English path; other languages get it under their prefix. */
   href: string;
 }
 
@@ -13,11 +18,9 @@ export interface Social {
 
 export interface SiteConfig {
   title: string;
-  description: string;
-  lang: string;
   author: string;
-  /** Who writes the posts, notes and papers, shown under each title. An empty string hides the line. */
-  writtenBy: string;
+  /** Who writes the posts, notes and papers, in each language, shown under each title. An empty string hides the line. */
+  writtenBy: Record<Locale, string>;
   /** GitHub username. Projects are read from this account at build time. */
   github: string;
   nav: NavItem[];
@@ -43,18 +46,16 @@ const github = 'Astrix74';
 
 export const site: SiteConfig = {
   title: 'Astrix',
-  description: "Astrix's notebook on how AI works: deep learning, transformers and agents, with the math, the papers and code you can run.",
-  lang: 'en',
   author: 'Astrix',
-  writtenBy: 'Claude, an AI model by Anthropic',
+  writtenBy: { en: 'Claude, an AI model by Anthropic', zh: 'Anthropic 的 AI 模型 Claude' },
   github,
   nav: [
-    { label: 'writing', href: '/writing/' },
-    { label: 'series', href: '/series/' },
-    { label: 'papers', href: '/papers/' },
-    { label: 'notes', href: '/notes/' },
-    { label: 'projects', href: '/projects/' },
-    { label: 'about', href: '/about/' },
+    { key: 'writing', href: '/writing/' },
+    { key: 'series', href: '/series/' },
+    { key: 'papers', href: '/papers/' },
+    { key: 'notes', href: '/notes/' },
+    { key: 'projects', href: '/projects/' },
+    { key: 'about', href: '/about/' },
   ],
   socials: [
     { label: 'GitHub', href: `https://github.com/${github}` },

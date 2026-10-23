@@ -41,6 +41,16 @@ const alertLabels: Record<string, string> = {
   caution: 'Caution',
 };
 
+// Default labels for translations, chosen by the language folder the file is in (content/posts/zh/…).
+const translatedAlertLabels: Record<string, Record<string, string>> = {
+  zh: { note: '注', tip: '提示', important: '重要', warning: '警告', caution: '注意' },
+};
+
+function labelsFor(file: URL | undefined): Record<string, string> {
+  const folder = file && /\/content\/[^/]+\/([a-z]{2})\//.exec(file.pathname)?.[1];
+  return (folder && translatedAlertLabels[folder]) || alertLabels;
+}
+
 /**
  * GitHub-style alerts: a quote whose first line is `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`
  * or `[!CAUTION]` becomes a callout. Text after the marker replaces the default label.
@@ -68,7 +78,7 @@ export const alertPlugin: MdastPlugin = {
     ctx.prependChild(node, {
       type: 'paragraph',
       data: { hProperties: { className: ['callout-label'] } },
-      children: [{ type: 'text', value: match[2].trim() || alertLabels[kind] }],
+      children: [{ type: 'text', value: match[2].trim() || labelsFor(ctx.fileURL)[kind] }],
     });
     ctx.setProperty(node, 'data', { hName: 'aside', hProperties: { className: ['callout'], dataKind: kind } });
   },

@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectList from '../components/ProjectList.astro';
+import { site } from '../config/site';
+import type { Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import { getProjects } from '../lib/projects';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = strings[locale];
+const projects = await getProjects();
+---
+
+<BaseLayout locale={locale} title={t.projects.title} description={t.projects.description}>
+  <h1 class="page-title">{t.projects.title}</h1>
+  {
+    projects.length > 0 ? (
+      <ProjectList projects={projects} locale={locale} detailed />
+    ) : (
+      <p class="empty">
+        {import.meta.env.DEV
+          ? `No projects selected. Add the "${site.projects.topic}" topic to a repo on GitHub, or list it in src/config/site.ts.`
+          : t.nothingHere}
+      </p>
+    )
+  }
+</BaseLayout>

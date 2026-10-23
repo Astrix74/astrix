@@ -1,21 +1,40 @@
 ---
 import { site } from '../config/site';
+import { languageName, languageTag, locales, localize, type Alternates, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
 import { getProjects } from '../lib/projects';
 
+interface Props {
+  locale: Locale;
+  /** This page in other languages; without one, the switcher goes to that language's home page. */
+  alternates: Alternates;
+}
+
+const { locale, alternates } = Astro.props;
+const t = strings[locale];
 const path = Astro.url.pathname;
-const isCurrent = (href: string) => path.startsWith(href);
 // The projects page stays out of the menu until there is something on it.
 const hasProjects = (await getProjects()).length > 0;
-const items = site.nav.filter((item) => hasProjects || item.href !== '/projects/');
+const items = site.nav
+  .filter((item) => hasProjects || item.href !== '/projects/')
+  .map((item) => ({ label: t.nav[item.key], href: localize(locale, item.href) }));
+const others = locales.filter((other) => other !== locale);
 ---
 
 <header class="site-header">
-  <a class="brand" href="/">{site.title}</a>
-  <nav aria-label="Primary">
+  <a class="brand" href={localize(locale, '/')}>{site.title}</a>
+  <nav aria-label={t.menuLabel}>
     {
       items.map((item) => (
-        <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+        <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>
           {item.label}
+        </a>
+      ))
+    }
+    {
+      others.map((other) => (
+        <a class="language" href={alternates[other] ?? localize(other, '/')} hreflang={languageTag[other]} lang={languageTag[other]}>
+          {languageName[other]}
         </a>
       ))
     }

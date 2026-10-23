@@ -1,5 +1,13 @@
 ---
 import { site } from '../config/site';
+import { languageTag, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
 
 const { repo, repoId, category, categoryId } = site.comments;
 const enabled = Boolean(repoId && categoryId);
@@ -7,8 +15,8 @@ const enabled = Boolean(repoId && categoryId);
 
 {
   enabled && (
-    <section class="comments" aria-label="Comments">
-      <h2 class="label">Comments</h2>
+    <section class="comments" aria-label={strings[locale].comments}>
+      <h2 class="label">{strings[locale].comments}</h2>
       <script
         is:inline
         src="https://giscus.app/client.js"
@@ -22,7 +30,7 @@ const enabled = Boolean(repoId && categoryId);
         data-emit-metadata="0"
         data-input-position="bottom"
         data-theme="preferred_color_scheme"
-        data-lang={site.lang}
+        data-lang={languageTag[locale]}
         data-loading="lazy"
         crossorigin="anonymous"
         async

@@ -23,3 +23,5 @@ jobs:
       - run: pnpm build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: pnpm check:links
+      - run: pnpm check:translations

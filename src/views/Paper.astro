@@ -1,0 +1,96 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Byline from '../components/Byline.astro';
+import ProseScripts from '../components/ProseScripts.astro';
+import ReferenceList from '../components/ReferenceList.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import TranslationNotice from '../components/TranslationNotice.astro';
+import { site } from '../config/site';
+import { defaultLocale, localize, slugOf, type Alternates, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import type { Paper } from '../lib/papers';
+import { formatDate, readingMinutes } from '../lib/posts';
+import { referencesOf } from '../lib/references';
+
+interface Props {
+  paper: Paper;
+  locale: Locale;
+  alternates: Alternates;
+}
+
+const { paper, locale, alternates } = Astro.props;
+const t = strings[locale];
+const { Content, headings } = await render(paper);
+const references = await referencesOf(paper);
+const { date, updated } = paper.data;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+// Translations share the original's card, whose font has no Chinese or Japanese glyphs.
+const image = `/og/papers/${slugOf(paper.id)}.png`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ScholarlyArticle',
+  headline: paper.data.title,
+  description: paper.data.description,
+  abstract: paper.data.abstract,
+  datePublished: date.toISOString(),
+  dateModified: (updated ?? date).toISOString(),
+  author: { '@type': 'Person', name: site.author, url: new URL(localize(locale, '/'), Astro.site).href },
+  mainEntityOfPage: canonical,
+  image: new URL(image, Astro.site).href,
+};
+---
+
+<BaseLayout
+  locale={locale}
+  alternates={alternates}
+  title={paper.data.title}
+  description={paper.data.description}
+  type="article"
+  image={image}
+  jsonLd={jsonLd}
+>
+  <article>
+    <a class="back" href={localize(locale, '/papers/')}>{t.papers.back}</a>
+    <h1 class="post-title">{paper.data.title}</h1>
+    <p class="post-meta">
+      <time datetime={date.toISOString()}>{formatDate(date)}</time>
+      {
+        updated && formatDate(updated) !== formatDate(date) && (
+          <>
+            {' · '}
+            <time datetime={updated.toISOString()}>{t.updatedOn(formatDate(updated))}</time>
+          </>
+        )
+      }
+      {` · ${t.minRead(readingMinutes(paper.body))} · ${t.papers.notPeerReviewed}`}
+      {paper.data.draft && ` · ${t.draft}`}
+    </p>
+    <Byline locale={locale} writtenBy={paper.data.writtenBy} />
+    <TranslationNotice
+      locale={locale}
+      originalHref={localize(defaultLocale, `/papers/${slugOf(paper.id)}/`)}
+      hasFigures={/!\[/.test(paper.body ?? '')}
+    />
+    <section class="abstract" aria-labelledby="abstract-label">
+      <h2 class="label" id="abstract-label">{t.papers.abstract}</h2>
+      <p>{paper.data.abstract}</p>
+    </section>
+    <TableOfContents headings={headings} locale={locale} />
+    <div class="prose">
+      <Content />
+    </div>
+    {
+      references.length > 0 && (
+        <section class="more-posts" aria-labelledby="paper-references">
+          <h2 class="label" id="paper-references">
+            {t.post.references}
+          </h2>
+          <ReferenceList references={references} locale={locale} />
+        </section>
+      )
+    }
+  </article>
+  <ProseScripts />
+</BaseLayout>

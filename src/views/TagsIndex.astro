@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localize, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import { getPosts } from '../lib/posts';
+import { collectTags } from '../lib/tags';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = strings[locale];
+const tags = collectTags(await getPosts(locale));
+---
+
+<BaseLayout locale={locale} title={t.tags.title} description={t.tags.description}>
+  <a class="back" href={localize(locale, '/writing/')}>{t.writing.back}</a>
+  <h1 class="page-title">{t.tags.title}</h1>
+  {
+    tags.length > 0 ? (
+      <ul class="tag-list">
+        {tags.map(({ tag, slug, count }) => (
+          <li>
+            <a href={localize(locale, `/writing/tags/${slug}/`)}>
+              {tag}
+              <span class="count">{count}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="empty">{t.tags.none}</p>
+    )
+  }
+</BaseLayout>

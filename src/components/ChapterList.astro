@@ -1,23 +1,28 @@
 ---
+import type { Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import { entryHref } from '../lib/links';
 import type { Post } from '../lib/posts';
 
 interface Props {
   chapters: Post[];
+  locale: Locale;
   /** Titles of chapters not written yet, listed after the others. */
   planned?: string[];
 }
 
-const { chapters, planned = [] } = Astro.props;
+const { chapters, locale, planned = [] } = Astro.props;
+const t = strings[locale];
 ---
 
 <ol class="entries chapters">
   {
     chapters.map((post) => (
       <li>
-        <span class="date">Ch {post.data.chapter}</span>
-        <a href={`/writing/${post.id}/`}>
+        <span class="date">{t.series.chapterShort(post.data.chapter!)}</span>
+        <a href={entryHref(post)}>
           {post.data.title}
-          {post.data.draft && <span class="draft"> (draft)</span>}
+          {post.data.draft && <span class="draft">{t.draftSuffix}</span>}
         </a>
       </li>
     ))
@@ -25,7 +30,7 @@ const { chapters, planned = [] } = Astro.props;
   {
     planned.map((title) => (
       <li class="planned">
-        <span class="date">coming</span>
+        <span class="date">{t.series.coming}</span>
         <span class="planned-title">{title}</span>
       </li>
     ))

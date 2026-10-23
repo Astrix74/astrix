@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import type { Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import { entryHref } from '../lib/links';
+import { getPapers } from '../lib/papers';
+import { formatDate } from '../lib/posts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = strings[locale];
+const papers = await getPapers(locale);
+---
+
+<BaseLayout locale={locale} title={t.papers.title} description={t.papers.description}>
+  <h1 class="page-title">{t.papers.title}</h1>
+  <p class="page-intro">{t.papers.intro}</p>
+  {
+    papers.length > 0 ? (
+      <ul class="entries papers">
+        {papers.map((paper) => (
+          <li>
+            <time class="date" datetime={paper.data.date.toISOString()}>
+              {formatDate(paper.data.date)}
+            </time>
+            <div class="paper-item">
+              <a href={entryHref(paper)}>
+                {paper.data.title}
+                {paper.data.draft && <span class="draft">{t.draftSuffix}</span>}
+              </a>
+              <p class="paper-desc">{paper.data.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="empty">{t.nothingPublished}</p>
+    )
+  }
+</BaseLayout>

@@ -1,19 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import SeriesList from '../../components/SeriesList.astro';
-import { getCitedReferences } from '../../lib/references';
-import { getSeries } from '../../lib/series';
-
-const items = await getSeries();
-const hasReading = (await getCitedReferences()).length > 0;
+import SeriesIndex from '../../views/SeriesIndex.astro';
 ---
 
-<BaseLayout title="Series" description="Step-by-step series, meant to be read in order.">
-  <h1 class="page-title">Series</h1>
-  <p class="page-intro">
-    Each series builds one topic chapter by chapter, from first principles to the papers it rests on. They are listed in
-    a suggested reading order, and each page says which series to read first.
-  </p>
-  {items.length > 0 ? <SeriesList items={items} /> : <p class="empty">Nothing published yet.</p>}
-  {hasReading && <a class="more" href="/reading/">The reading list behind them</a>}
-</BaseLayout>
+<SeriesIndex locale="en" />

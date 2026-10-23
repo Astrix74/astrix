@@ -1,0 +1,8 @@
+---
+import Page from '../../views/Page.astro';
+import { pagePaths } from '../../lib/paths';
+
+export const getStaticPaths = () => pagePaths('zh');
+---
+
+<Page {...Astro.props} />

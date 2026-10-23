@@ -1,0 +1,18 @@
+---
+import { defaultLocale, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+
+interface Props {
+  locale: Locale;
+  /** The original, in the default language. */
+  originalHref: string;
+  /** Set when the entry has figures, whose text stays in the original language. */
+  hasFigures?: boolean;
+}
+
+const { locale, originalHref, hasFigures = false } = Astro.props;
+const t = strings[locale].translation;
+const notice = locale === defaultLocale ? '' : t.notice(originalHref) + (hasFigures ? t.figures : '');
+---
+
+{notice && <p class="byline translation-notice" set:html={notice} />}

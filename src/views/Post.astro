@@ -1,0 +1,171 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Byline from '../components/Byline.astro';
+import Comments from '../components/Comments.astro';
+import PostList from '../components/PostList.astro';
+import PostMeta from '../components/PostMeta.astro';
+import ProseScripts from '../components/ProseScripts.astro';
+import ReferenceList from '../components/ReferenceList.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import TranslationNotice from '../components/TranslationNotice.astro';
+import { site } from '../config/site';
+import { defaultLocale, localize, slugOf, type Alternates, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import { postImage } from '../lib/images';
+import { entryHref } from '../lib/links';
+import type { Post } from '../lib/posts';
+import { referencesOf } from '../lib/references';
+import { seriesUrl, type SeriesWithChapters } from '../lib/series';
+
+interface Props {
+  post: Post;
+  locale: Locale;
+  alternates: Alternates;
+  newer?: Post;
+  older?: Post;
+  series?: SeriesWithChapters;
+  previousChapter?: Post;
+  nextChapter?: Post;
+  related: Post[];
+}
+
+const { post, locale, alternates, newer, older, series, previousChapter, nextChapter, related } = Astro.props;
+const t = strings[locale];
+const { Content, headings } = await render(post);
+const references = await referencesOf(post);
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const shareUrl = `https://x.com/intent/post?${new URLSearchParams({ text: post.data.title, url: canonical })}`;
+const image = await postImage(post);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  dateModified: (post.data.updated ?? post.data.date).toISOString(),
+  author: { '@type': 'Person', name: site.author, url: new URL(localize(locale, '/'), Astro.site).href },
+  mainEntityOfPage: post.data.canonical ?? canonical,
+  image: new URL(image, Astro.site).href,
+  ...(post.data.tags.length > 0 && { keywords: post.data.tags.join(', ') }),
+  ...(series && {
+    position: post.data.chapter,
+    isPartOf: {
+      '@type': 'CreativeWorkSeries',
+      name: series.display.data.title,
+      url: new URL(seriesUrl(locale, series.series.id), Astro.site).href,
+    },
+  }),
+};
+
+const projectRef = post.data.project;
+const projectEntry = projectRef ? await getEntry('projects', projectRef) : undefined;
+const project = projectRef
+  ? {
+      name: projectEntry?.data.name ?? projectRef,
+      description: projectEntry?.data.description,
+      url: projectEntry?.data.url ?? `https://github.com/${projectRef.includes('/') ? projectRef : `${site.github}/${projectRef}`}`,
+    }
+  : undefined;
+---
+
+<BaseLayout
+  locale={locale}
+  alternates={alternates}
+  title={post.data.title}
+  description={post.data.description}
+  type="article"
+  canonical={post.data.canonical}
+  image={image}
+  jsonLd={jsonLd}
+>
+  <article>
+    <a class="back" href={localize(locale, '/writing/')}>{t.writing.back}</a>
+    <h1 class="post-title">{post.data.title}</h1>
+    <PostMeta post={post} />
+    {
+      series && (
+        <p class="chapter-line">
+          {t.post.chapter(post.data.chapter!)} · <a href={seriesUrl(locale, series.series.id)}>{series.display.data.title}</a>
+        </p>
+      )
+    }
+    <Byline locale={locale} writtenBy={post.data.writtenBy} />
+    <TranslationNotice
+      locale={locale}
+      originalHref={localize(defaultLocale, `/writing/${slugOf(post.id)}/`)}
+      hasFigures={/!\[/.test(post.body ?? '')}
+    />
+    <TableOfContents headings={headings} locale={locale} />
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {
+      references.length > 0 && (
+        <section class="more-posts" aria-labelledby="post-references">
+          <h2 class="label" id="post-references">
+            {t.post.references}
+          </h2>
+          <ReferenceList references={references} locale={locale} />
+        </section>
+      )
+    }
+
+    {
+      project && (
+        <aside class="related" aria-label={t.post.relatedProjectLabel}>
+          <span class="related-label">{t.post.project}</span>
+          <a class="related-name" href={project.url}>
+            {project.name}
+          </a>
+          {project.description && <span class="related-desc">{project.description}</span>}
+        </aside>
+      )
+    }
+
+    {
+      related.length > 0 && (
+        <section class="more-posts" aria-labelledby="related-posts">
+          <h2 class="label" id="related-posts">
+            {t.post.related}
+          </h2>
+          <PostList posts={related} />
+        </section>
+      )
+    }
+
+    <div class="post-links">
+      <a href={shareUrl}>{t.post.shareOnX}</a>
+      <a href={localize(locale, '/rss.xml')}>RSS</a>
+    </div>
+
+    {
+      series ? (
+        <nav class="pager" aria-label={t.post.chapters}>
+          {previousChapter ? (
+            <a href={entryHref(previousChapter)}>{t.post.previousChapter(previousChapter.data.chapter!, previousChapter.data.title)}</a>
+          ) : (
+            <span />
+          )}
+          {nextChapter ? (
+            <a href={entryHref(nextChapter)}>{t.post.nextChapter(nextChapter.data.chapter!, nextChapter.data.title)}</a>
+          ) : (
+            <a href={seriesUrl(locale, series.series.id)}>{t.post.allChapters}</a>
+          )}
+        </nav>
+      ) : (
+        <nav class="pager" aria-label={t.post.morePosts}>
+          {older ? <a href={entryHref(older)}>← {older.data.title}</a> : <span />}
+          {newer ? <a href={entryHref(newer)}>{newer.data.title} →</a> : <span />}
+        </nav>
+      )
+    }
+
+    <Comments locale={locale} />
+  </article>
+  <ProseScripts />
+</BaseLayout>

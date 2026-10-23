@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { defaultLocale, type Locale } from '../i18n';
 import { getNotes } from './notes';
 import { getPapers } from './papers';
 import { getPosts } from './posts';
@@ -9,45 +10,21 @@ export type CitingEntry = CollectionEntry<'posts'> | CollectionEntry<'notes'> | 
 
 export interface CitedReference {
   reference: Reference;
-  /** Visible entries that cite this reference. */
+  /** Visible entries in the same language that cite this reference. */
   citedBy: CitingEntry[];
 }
 
-/** The address of an entry that cites references. */
-export function entryHref(entry: CitingEntry): string {
-  const section = { posts: 'writing', notes: 'notes', papers: 'papers' }[entry.collection];
-  return `/${section}/${entry.id}/`;
-}
-
-async function getReferenceMap(): Promise<Map<string, Reference>> {
-  return new Map((await getCollection('references')).map((reference) => [reference.id, reference]));
-}
-
-/** Astro only logs an unknown reference, so an unknown citation key is made to fail the build here. */
-function cited(entry: CitingEntry, references: Map<string, Reference>): Reference[] {
-  return entry.data.references.map(({ id }) => {
-    const reference = references.get(id);
-    if (!reference) {
-      throw new Error(`"${entry.id}" in ${entry.collection} cites "${id}", which is not in src/content/references.yaml.`);
-    }
-    return reference;
-  });
-}
-
-/** The references an entry lists, in its order. */
+/** The references an entry lists, in its order. Unknown keys are caught by checkContent. */
 export async function referencesOf(entry: CitingEntry): Promise<Reference[]> {
-  return cited(entry, await getReferenceMap());
+  const references = new Map((await getCollection('references')).map((reference) => [reference.id, reference]));
+  return entry.data.references.flatMap(({ id }) => references.get(id) ?? []);
 }
 
-/** References cited by at least one visible entry, oldest first. */
-export async function getCitedReferences(): Promise<CitedReference[]> {
-  const references = await getReferenceMap();
-  // Every entry, drafts included, is checked so a bad key shows up before it is published.
-  const all = [...(await getCollection('posts')), ...(await getCollection('notes')), ...(await getCollection('papers'))];
-  for (const entry of all) cited(entry, references);
-
-  const visible: CitingEntry[] = [...(await getPapers()), ...(await getPosts()), ...(await getNotes())];
-  return [...references.values()]
+/** References cited by at least one visible entry in this language, oldest first. */
+export async function getCitedReferences(locale: Locale = defaultLocale): Promise<CitedReference[]> {
+  const references = await getCollection('references');
+  const visible: CitingEntry[] = [...(await getPapers(locale)), ...(await getPosts(locale)), ...(await getNotes(locale))];
+  return references
     .map((reference) => ({
       reference,
       citedBy: visible.filter((entry) => entry.data.references.some(({ id }) => id === reference.id)),

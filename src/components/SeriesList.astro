@@ -1,41 +1,40 @@
 ---
+import type { Locale } from '../i18n';
+import { strings } from '../i18n/strings';
 import { seriesUrl, type SeriesWithChapters } from '../lib/series';
 
 interface Props {
   items: SeriesWithChapters[];
+  locale: Locale;
 }
 
-const { items } = Astro.props;
-const visible = new Map(items.map(({ series }) => [series.id, series]));
-
-// Prerequisites are listed only when they are themselves visible.
-const meta = ({ series, chapters }: SeriesWithChapters) => {
-  const first = series.data.prerequisites.flatMap(({ id }) => visible.get(id) ?? []);
-  return { count: `${chapters.length} ${chapters.length === 1 ? 'chapter' : 'chapters'}`, first };
-};
+const { items, locale } = Astro.props;
+const t = strings[locale];
+const visible = new Map(items.map((item) => [item.series.id, item]));
 ---
 
 <ol class="series-list">
   {
     items.map((item, index) => {
-      const { count, first } = meta(item);
+      // Prerequisites are listed only when they are themselves visible.
+      const first = item.series.data.prerequisites.flatMap(({ id }) => visible.get(id) ?? []);
       return (
         <li>
           <span class="date">{String(index + 1).padStart(2, '0')}</span>
           <div class="series-item">
-            <a class="series-title" href={seriesUrl(item.series.id)}>
-              {item.series.data.title}
+            <a class="series-title" href={seriesUrl(locale, item.series.id)}>
+              {item.display.data.title}
             </a>
-            <p class="series-desc">{item.series.data.description}</p>
+            <p class="series-desc">{item.display.data.description}</p>
             <p class="series-meta">
-              {count}
+              {t.series.chapters(item.chapters.length)}
               {first.length > 0 && (
                 <>
-                  {' · read first: '}
-                  {first.map((series, i) => (
+                  {t.series.readFirst}
+                  {first.map((other, i) => (
                     <>
                       {i > 0 && ', '}
-                      <a href={seriesUrl(series.id)}>{series.data.title}</a>
+                      <a href={seriesUrl(locale, other.series.id)}>{other.display.data.title}</a>
                     </>
                   ))}
                 </>

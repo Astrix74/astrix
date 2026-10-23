@@ -1,0 +1,50 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Byline from '../components/Byline.astro';
+import ProseScripts from '../components/ProseScripts.astro';
+import { site } from '../config/site';
+import { localize, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import { entryHref } from '../lib/links';
+import { getNotes } from '../lib/notes';
+import { formatDate } from '../lib/posts';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = strings[locale];
+const p = (path: string) => localize(locale, path);
+const notes = await getNotes(locale);
+const entries = await Promise.all(notes.map(async (note) => ({ note, Content: (await render(note)).Content })));
+---
+
+<BaseLayout locale={locale} title={t.notes.title} description={t.notes.description}>
+  <link slot="head" rel="alternate" type="application/rss+xml" title={t.notes.feedTitle(site.title)} href={p('/notes/rss.xml')} />
+  <h1 class="page-title">{t.notes.title}</h1>
+  <p class="page-intro" set:html={t.notes.intro(p)} />
+  <Byline locale={locale} />
+  {
+    entries.length > 0 ? (
+      entries.map(({ note, Content }) => (
+        <article class="note">
+          <h2 class="note-title">
+            <a href={entryHref(note)}>{note.data.title}</a>
+          </h2>
+          <p class="post-meta">
+            <time datetime={note.data.date.toISOString()}>{formatDate(note.data.date)}</time>
+            {note.data.draft && ` · ${t.draft}`}
+          </p>
+          <div class="prose">
+            <Content />
+          </div>
+        </article>
+      ))
+    ) : (
+      <p class="empty">{t.nothingHere}</p>
+    )
+  }
+  <ProseScripts />
+</BaseLayout>

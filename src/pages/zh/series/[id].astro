@@ -1,0 +1,8 @@
+---
+import Series from '../../../views/Series.astro';
+import { seriesPaths } from '../../../lib/paths';
+
+export const getStaticPaths = () => seriesPaths('zh');
+---
+
+<Series {...Astro.props} />

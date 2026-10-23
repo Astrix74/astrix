@@ -1,0 +1,37 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, socials } from '../config/site';
+import { localize, slugOf, type Alternates, type Locale } from '../i18n';
+import { strings } from '../i18n/strings';
+import { formatDate } from '../lib/posts';
+
+interface Props {
+  page: CollectionEntry<'pages'>;
+  locale: Locale;
+  alternates: Alternates;
+}
+
+const { page, locale, alternates } = Astro.props;
+const { Content } = await render(page);
+
+// The About page describes the person behind the site.
+const jsonLd =
+  slugOf(page.id) === 'about'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: site.author,
+        url: new URL(localize(locale, '/'), Astro.site).href,
+        sameAs: socials.map((social) => social.href).filter((href) => /^https?:\/\//.test(href)),
+      }
+    : undefined;
+---
+
+<BaseLayout locale={locale} alternates={alternates} title={page.data.title} description={page.data.description} jsonLd={jsonLd}>
+  <h1 class="page-title">{page.data.title}</h1>
+  {page.data.updated && <p class="page-meta">{strings[locale].updatedCapital(formatDate(page.data.updated))}</p>}
+  <div class="prose">
+    <Content />
+  </div>
+</BaseLayout>

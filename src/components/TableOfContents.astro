@@ -1,8 +1,11 @@
 ---
 import type { MarkdownHeading } from 'astro';
+import type { Locale } from '../i18n';
+import { strings } from '../i18n/strings';
 
 interface Props {
   headings: MarkdownHeading[];
+  locale: Locale;
 }
 
 // The footnotes section brings its own visually hidden heading; it is not part of the post's outline.
@@ -14,7 +17,7 @@ const items = Astro.props.headings.filter(
 {
   items.length >= 3 && (
     <details class="toc">
-      <summary>Contents</summary>
+      <summary>{strings[Astro.props.locale].contents}</summary>
       <ol>
         {items.map((heading) => (
           <li class={heading.depth === 3 ? 'toc-sub' : undefined}>

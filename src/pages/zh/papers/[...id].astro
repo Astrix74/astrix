@@ -1,0 +1,8 @@
+---
+import Paper from '../../../views/Paper.astro';
+import { paperPaths } from '../../../lib/paths';
+
+export const getStaticPaths = () => paperPaths('zh');
+---
+
+<Paper {...Astro.props} />

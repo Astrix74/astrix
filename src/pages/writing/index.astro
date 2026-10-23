@@ -1,31 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostList from '../../components/PostList.astro';
-import { getPosts } from '../../lib/posts';
-import { collectTags } from '../../lib/tags';
-
-const posts = await getPosts();
-const years = [...new Set(posts.map((post) => post.data.date.getUTCFullYear()))];
-const hasTags = collectTags(posts).length > 0;
+import WritingIndex from '../../views/WritingIndex.astro';
 ---
 
-<BaseLayout title="Writing" description="Every article, newest first, including the chapters of each series.">
-  <h1 class="page-title">Writing</h1>
-  <p class="page-intro">
-    Articles, newest first, including every chapter of the <a href="/series/">series</a>. Shorter pieces are in
-    <a href="/notes/">notes</a>, and longer original analysis is in <a href="/papers/">papers</a>.
-  </p>
-  {hasTags && <p class="page-meta"><a href="/writing/tags/">Browse by tag</a></p>}
-  {
-    years.length > 0 ? (
-      years.map((year) => (
-        <section class="section">
-          <h2 class="label">{year}</h2>
-          <PostList posts={posts.filter((post) => post.data.date.getUTCFullYear() === year)} />
-        </section>
-      ))
-    ) : (
-      <p class="empty">Nothing published yet.</p>
-    )
-  }
-</BaseLayout>
+<WritingIndex locale="en" />

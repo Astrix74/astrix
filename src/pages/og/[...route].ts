@@ -1,17 +1,19 @@
 import { OGImageRoute } from 'astro-og-canvas';
 import { site } from '../../config/site';
+import { strings } from '../../i18n/strings';
 import { getPapers } from '../../lib/papers';
 import { formatDate, getPosts } from '../../lib/posts';
 import { getSeries } from '../../lib/series';
 
 // One share-preview image per post, paper and series, plus /og/default.png for every other page.
-// A post with a `cover` image uses that instead, so it gets no generated card.
+// A post with a `cover` image uses that instead, so it gets no generated card. Cards are made from the
+// English entries only: the card font has no Chinese or Japanese glyphs, so translations reuse them.
 const posts = (await getPosts()).filter((post) => !post.data.cover);
 const allSeries = await getSeries();
 const seriesTitles = new Map(allSeries.map(({ series }) => [series.id, series.data.title]));
 
 const pages: Record<string, { title: string; description: string }> = {
-  default: { title: site.title, description: site.description },
+  default: { title: site.title, description: strings.en.siteDescription },
   ...Object.fromEntries(
     posts.map((post) => {
       const seriesTitle = post.data.series && seriesTitles.get(post.data.series.id);
