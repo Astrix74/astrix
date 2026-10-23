@@ -8,7 +8,7 @@ chapter: 2
 references: [rumelhart1986, baydin2015, yang2019]
 ---
 
-[《反向传播就是反向模式自动微分》](/writing/backpropagation-is-reverse-mode-differentiation/)用四十行代码实现了一个 autograd 引擎，其中每个节点只存一个数。PyTorch、JAX 以及所有其他框架跑的都是同一个算法，区别只有两点：每个节点存的是一整个张量，每个操作的反向步骤本身也是一次张量计算。本章就来做这个改动。算法不变，新增的只是几条数组规则，其中最重要的一条来自广播。
+[《反向传播就是反向模式自动微分》](/zh/writing/backpropagation-is-reverse-mode-differentiation/)用四十行代码实现了一个 autograd 引擎，其中每个节点只存一个数。PyTorch、JAX 以及所有其他框架跑的都是同一个算法，区别只有两点：每个节点存的是一整个张量，每个操作的反向步骤本身也是一次张量计算。本章就来做这个改动。算法不变，新增的只是几条数组规则，其中最重要的一条来自广播。
 
 ## 一条新规则：广播反过来就是求和
 
@@ -114,7 +114,7 @@ def cross_entropy(logits, targets):
     return out
 ```
 
-前向传播在取指数之前，先减去每一行的最大值。这不会改变 softmax 的结果，又能让每个指数都不大于零。这就是 log-sum-exp 技巧。反向传播用的是[《学习即优化》](/writing/learning-as-optimization/)里的结论：预测概率减去 one-hot 目标。
+前向传播在取指数之前，先减去每一行的最大值。这不会改变 softmax 的结果，又能让每个指数都不大于零。这就是 log-sum-exp 技巧。反向传播用的是[《学习即优化》](/zh/writing/learning-as-optimization/)里的结论：预测概率减去 one-hot 目标。
 
 ## 检验每一个操作
 

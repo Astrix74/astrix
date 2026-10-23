@@ -40,7 +40,7 @@ tags: [guide, learning, deep-learning]
 
 一切的核心：一个要最小化的损失，用链式法则求出的梯度，以及一个自动计算梯度的引擎。
 
-- **本站**：[《学习即优化》](/writing/learning-as-optimization/)、[《反向传播就是反向模式自动微分》](/writing/backpropagation-is-reverse-mode-differentiation/)，然后是[《张量：内存、形状与步长》](/zh/writing/tensors-memory-shapes-and-strides/)和[《为张量实现一个 autograd 引擎》](/zh/writing/autograd-for-tensors/)。
+- **本站**：[《学习即优化》](/zh/writing/learning-as-optimization/)、[《反向传播就是反向模式自动微分》](/zh/writing/backpropagation-is-reverse-mode-differentiation/)，然后是[《张量：内存、形状与步长》](/zh/writing/tensors-memory-shapes-and-strides/)和[《为张量实现一个 autograd 引擎》](/zh/writing/autograd-for-tensors/)。
 - **其他地方**：Andrej Karpathy 的 [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html) 第一讲，它从零写出 [micrograd](https://github.com/karpathy/micrograd)，一个大约一百行的标量 autograd 引擎。斯坦福 [CS231n 的讲义](https://cs231n.github.io/)把反向传播讲成梯度在电路中的流动。
 - **检查点**：凭记忆写出一个两层网络的前向和反向传播，并做梯度检验。
 
@@ -48,7 +48,7 @@ tags: [guide, learning, deep-learning]
 
 深层网络为什么难训练，以及大家都在用的那些解决办法：初始化、归一化、残差连接和更好的优化器。
 
-- **本站**：[《让深度可训练》](/writing/making-depth-trainable/)，关于 [Adam 与 AdamW](/notes/adam-and-adamw/) 和 [LayerNorm 与 RMSNorm](/notes/layernorm-vs-rmsnorm/) 的笔记，以及讲训练改用 16 位数字后会发生什么的[《数值》](/writing/floating-point-and-mixed-precision/)。
+- **本站**：[《让深度可训练》](/zh/writing/making-depth-trainable/)，关于 [Adam 与 AdamW](/notes/adam-and-adamw/) 和 [LayerNorm 与 RMSNorm](/notes/layernorm-vs-rmsnorm/) 的笔记，以及讲训练改用 16 位数字后会发生什么的[《数值》](/writing/floating-point-and-mixed-precision/)。
 - **其他地方**：Zero to Hero 里的 makemore 系列讲座，尤其是“Activations & Gradients, BatchNorm”和“Becoming a Backprop Ninja”，后者让你亲手写出整个网络的反向传播。fast.ai 的 [Practical Deep Learning for Coders](https://course.fast.ai/) 第 2 部分从零实现 Stable Diffusion，一路上还搭起了自己的训练框架，其中有专门讲初始化、归一化和混合精度的课。
 - **检查点**：给你一个训练不起来的网络，判断原因是初始化、学习率还是 bug，并拿出证据。
 
@@ -56,7 +56,7 @@ tags: [guide, learning, deep-learning]
 
 语言模型背后的架构，一块一块来。
 
-- **本站**：[《从第一性原理理解 Transformer》](/series/transformers/)的第 1 到第 3 章，以及论文[《注意力何时冻结》](/papers/when-attention-freezes/)。
+- **本站**：[《从第一性原理理解 Transformer》](/zh/series/transformers/)的第 1 到第 3 章，以及论文[《注意力何时冻结》](/papers/when-attention-freezes/)。
 - **其他地方**：先看 3Blue1Brown 的[神经网络系列课](https://www.3blue1brown.com/topics/neural-networks)，包括“Attention in transformers, step-by-step”，建立直观印象。然后是 Karpathy 的“Let's build GPT”，以及 [The Annotated Transformer](https://nlp.seas.harvard.edu/annotated-transformer/)，它逐行实现了原始论文。
 - **检查点**：实现带因果掩码的多头注意力，并测试改动未来的 token 永远不会改变过去位置的输出。
 
@@ -64,7 +64,7 @@ tags: [guide, learning, deep-learning]
 
 分词、小规模训练、采样，以及给定预算时模型应该多大。
 
-- **本站**：[《缩放定律》](/writing/scaling-laws/)。《深入底层》计划写一章端到端的内容。
+- **本站**：[《缩放定律》](/zh/writing/scaling-laws/)。《深入底层》计划写一章端到端的内容。
 - **其他地方**：Karpathy 的“Let's build the GPT Tokenizer”。然后是 [nanochat](https://github.com/karpathy/nanochat)，他目前的最小化代码库，涵盖“分词、预训练、微调、评估和推理”。它的前身 [nanoGPT](https://github.com/karpathy/nanoGPT) 如今自称“非常老旧，已被弃用”，但其中各约 300 行的模型文件和训练文件仍然清晰易读。Sebastian Raschka 的书《Build a Large Language Model (From Scratch)》（Manning 出版）一步步搭出一个 GPT，书中的全部代码都免费放在[一个公开仓库](https://github.com/rasbt/LLMs-from-scratch)里。
 - **检查点**：用你自选的一段文本训练一个小型 Transformer，从中采样，并解释它的损失曲线。
 
@@ -72,13 +72,13 @@ tags: [guide, learning, deep-learning]
 
 时间和内存究竟花在了哪里，以及为什么同样的数学既可以跑得快，也可以跑得慢。
 
-- **本站**：[张量那一章](/zh/writing/tensors-memory-shapes-and-strides/)里讲内存布局的一节，[《Transformer 块的内部》](/writing/inside-the-transformer-block/)里的 FLOP 计数，以及[关于 KV cache 的笔记](/notes/kv-cache-arithmetic/)。《深入底层》计划写一章讲 GPU。
+- **本站**：[张量那一章](/zh/writing/tensors-memory-shapes-and-strides/)里讲内存布局的一节，[《Transformer 块的内部》](/zh/writing/inside-the-transformer-block/)里的 FLOP 计数，以及[关于 KV cache 的笔记](/notes/kv-cache-arithmetic/)。《深入底层》计划写一章讲 GPU。
 - **其他地方**：Edward Yang 的 [PyTorch internals](http://blog.ezyang.com/2019/05/pytorch-internals/)，讲一个张量操作如何一路抵达它的内核。Karpathy 的 [llm.c](https://github.com/karpathy/llm.c) 用纯 C 和 CUDA 训练 GPT-2，其中 CPU 参考实现只有一个文件，大约一千行。[tinygrad](https://github.com/tinygrad/tinygrad) 用它自己的话说，是“介于 PyTorch 和 karpathy/micrograd 之间的东西”：一个能用的框架，比 PyTorch 小得多。
 - **检查点**：在运行之前估算一步训练的内存和计算量，然后实际测量。
 
 ### 第 6 阶段：阅读研究
 
-- **本站**：[论文](/zh/papers/)、[阅读清单](/zh/reading/)，以及[缩放定律那一章](/writing/scaling-laws/)里的复现部分，它示范了怎样拿一篇论文自己的证据去检验它。
+- **本站**：[论文](/zh/papers/)、[阅读清单](/zh/reading/)，以及[缩放定律那一章](/zh/writing/scaling-laws/)里的复现部分，它示范了怎样拿一篇论文自己的证据去检验它。
 - **检查点**：在小规模上复现某篇论文里的一张图或一张表。
 
 ### 数学：用到再学
