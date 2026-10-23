@@ -29,6 +29,11 @@ for (const file of htmlFiles(dist)) {
   pages.set(file, { ids, links });
 }
 
+if (pages.size === 0) {
+  console.log(`No pages found in ${dist}. Build the site first.`);
+  process.exit(1);
+}
+
 const fileFor = (path) => join(dist, path.endsWith('/') ? `${path}index.html` : path);
 const problems = [];
 let checked = 0;

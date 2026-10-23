@@ -5,7 +5,7 @@
 // when ** sits between punctuation and a character.
 // Usage: node scripts/check-translations.mjs [dist]
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { dirname, join, relative } from 'node:path';
 
 const content = 'src/content';
 const translations = ['zh'];
@@ -32,7 +32,8 @@ function parse(file) {
     return ' ';
   });
   rest = rest.replace(/(!?)\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g, (_, image, text, url) => {
-    if (image) found.images.push(url);
+    // Relative image paths are compared by the file they point to, since a translation sits one folder deeper.
+    if (image) found.images.push(/^\.\.?\//.test(url) ? relative(content, join(dirname(file), url)) : url);
     else if (/^https?:/.test(url)) found.urls.push(url);
     else found.internal.push(url.replace(/^\/[a-z]{2}\//, '/'));
     return ` ${text} `;
@@ -122,6 +123,8 @@ if (dist) {
     }
   }
 }
+
+if (dist && compared > 0 && pages === 0) problems.push(`no translated pages found in ${dist}; build the site first`);
 
 console.log(`${compared} translations compared with their originals${dist ? `, ${pages} translated pages scanned` : ''}, ${problems.length} problems`);
 for (const problem of problems) console.log(`  ${problem}`);
